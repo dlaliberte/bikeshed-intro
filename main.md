@@ -1,15 +1,14 @@
-Introduction to Writing Specifications with Bikeshed
------------------
+# Introduction to Writing Specifications with Bikeshed
 
 - [Introduction to Writing Specifications with Bikeshed](#introduction-to-writing-specifications-with-bikeshed)
-- [Initial setup](#initial-setup)
-  - [Using GitHub.](#using-github)
-- [Spec writing overviews](#spec-writing-overviews)
-- [Strategies for incremental development](#strategies-for-incremental-development)
-- [Starting Templates](#starting-templates)
-- [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
-- [Other Intros](#other-intros)
-  - [Not specific to Bikeshed](#not-specific-to-bikeshed)
+  - [Initial setup](#initial-setup)
+    - [Using GitHub.](#using-github)
+  - [Spec writing overviews](#spec-writing-overviews)
+  - [Strategies for incremental development](#strategies-for-incremental-development)
+  - [Starting Templates](#starting-templates)
+  - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
+  - [Other Intros](#other-intros)
+    - [Not specific to Bikeshed](#not-specific-to-bikeshed)
 
 ## Initial setup
 
@@ -17,7 +16,7 @@ Introduction to Writing Specifications with Bikeshed
 (mostly tactical "how to start a new spec")
 ### Using GitHub.
 
-Initially create an empty or mostly empty spec.bs file (e.g. [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)_), and associated files to automatically process updates to test the spec file and regenerate html.
+Initially create an empty or mostly empty `spec.bs` file (e.g. [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)_), and associated files to automatically process updates to test the spec file and regenerate html.
 
 See [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
 
