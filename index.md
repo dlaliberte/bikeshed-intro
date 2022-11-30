@@ -10,6 +10,13 @@
   - [Other Intros](#other-intros)
     - [Not specific to Bikeshed](#not-specific-to-bikeshed)
 
+
+## This document
+
+The website for this document is at: https://dlaliberte.github.io/bikeshed-intro/index.html
+The source for this document is at: https://github.com/dlaliberte/bikeshed-intro/blob/updates/index.md
+
+
 ## Initial setup
 
 [Domenic's guide to spec excellence - Docs](http://doc/1cRVD1k-hDBGfLVwTG14P_ZqJLM4d5-Z4vpwYFb_4qks#heading=h.qc07m2oa0jm)
