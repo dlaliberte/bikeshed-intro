@@ -1,6 +1,7 @@
 # Introduction to Writing Specifications with Bikeshed
 
 - [Introduction to Writing Specifications with Bikeshed](#introduction-to-writing-specifications-with-bikeshed)
+  - [Meta](#meta)
   - [Initial setup](#initial-setup)
     - [Using GitHub.](#using-github)
   - [Spec writing overviews](#spec-writing-overviews)
@@ -10,11 +11,10 @@
   - [Other Intros](#other-intros)
     - [Not specific to Bikeshed](#not-specific-to-bikeshed)
 
+## Meta
 
-## This document
-
-The website for this document is at: https://dlaliberte.github.io/bikeshed-intro/index.html
-The source for this document is at: https://github.com/dlaliberte/bikeshed-intro/blob/updates/index.md
+- This document: https://dlaliberte.github.io/bikeshed-intro/index.html
+- Source: https://github.com/dlaliberte/bikeshed-intro/blob/updates/index.md
 
 
 ## Initial setup
