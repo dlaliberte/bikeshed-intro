@@ -13,8 +13,9 @@
 
 ## Meta
 
-- This document: https://dlaliberte.github.io/bikeshed-intro/index.html
-- Source: https://github.com/dlaliberte/bikeshed-intro/blob/updates/index.md
+- This document: [Introduction to Writing Specifications with Bikeshed](https://dlaliberte.github.io/bikeshed-intro/index.html)
+- Source: [bikeshed-intro/index.md at updates · dlaliberte/bikeshed-intro](http://go/gh/dlaliberte/bikeshed-intro/blob/updates/index.md)
+- Issues: [Issues · dlaliberte/bikeshed-intro](http://go/gh/dlaliberte/bikeshed-intro/issues)
 
 
 ## Initial setup
