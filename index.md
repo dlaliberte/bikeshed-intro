@@ -3,7 +3,7 @@
 - [Introduction to Writing Specifications with Bikeshed](#introduction-to-writing-specifications-with-bikeshed)
   - [Meta](#meta)
   - [Initial setup](#initial-setup)
-    - [Using GitHub.](#using-github)
+    - [Using GitHub](#using-github)
   - [Spec writing overviews](#spec-writing-overviews)
   - [Strategies for incremental development](#strategies-for-incremental-development)
   - [Starting Templates](#starting-templates)
@@ -22,7 +22,8 @@
 
 [Domenic's guide to spec excellence - Docs](http://doc/1cRVD1k-hDBGfLVwTG14P_ZqJLM4d5-Z4vpwYFb_4qks#heading=h.qc07m2oa0jm)
 (mostly tactical "how to start a new spec")
-### Using GitHub.
+
+### Using GitHub
 
 Initially create an empty or mostly empty `spec.bs` file (e.g. [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)_), and associated files to automatically process updates to test the spec file and regenerate html.
 
@@ -31,7 +32,6 @@ See [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
 ## Spec writing overviews
 
 [How to read, write, and think about specs - Slides](http://go/how-to-specs#slide=id.p)
-
 
 ## Strategies for incremental development
 
@@ -43,9 +43,8 @@ After that, then you can add infra specs that reference the WebIDL specs.
 
 Different types of APIs could have specs that follow different patterns.  Here is a list of several:
 
-* [Sections template](http://go/gh/WICG/starter-kit/tree/main/templates)
 * [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)
-...
+* ...
 
 ## Sample Full Specifications following Best Practices
 
