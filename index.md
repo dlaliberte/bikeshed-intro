@@ -2,12 +2,15 @@
 
 - [Introduction to Writing Specifications with Bikeshed](#introduction-to-writing-specifications-with-bikeshed)
   - [Meta](#meta)
-  - [Initial setup](#initial-setup)
+  - [Overview](#overview)
+  - [Installing Bikeshed](#installing-bikeshed)
     - [Using GitHub](#using-github)
-  - [Spec writing overviews](#spec-writing-overviews)
-  - [Strategies for incremental development](#strategies-for-incremental-development)
+  - [Initial setup](#initial-setup)
   - [Starting Templates](#starting-templates)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
+  - [Spec writing overview](#spec-writing-overview)
+    - [Explainer to Specification](#explainer-to-specification)
+  - [Strategies for incremental development](#strategies-for-incremental-development)
   - [Other Intros](#other-intros)
     - [Not specific to Bikeshed](#not-specific-to-bikeshed)
 
@@ -17,19 +20,68 @@
 - Source: [bikeshed-intro/index.md at updates · dlaliberte/bikeshed-intro](http://go/gh/dlaliberte/bikeshed-intro/blob/updates/index.md)
 - Issues: [Issues · dlaliberte/bikeshed-intro](http://go/gh/dlaliberte/bikeshed-intro/issues)
 
+## Overview
+
+This document is intended as a simple introduction to writing specifications of web APIs using Bikeshed.  Very extensive [Bikeshed Documentation](https://tabatkins.github.io/bikeshed/) is available, but it is a complex tool which is a challenge to get started using since there is a lot to learn before one can become productive.
+
+As the Bikeshed documentation says: "Bikeshed is a spec-generating tool that takes in lightly-decorated Markdown and spits out a full spec, with cross-spec autolinking, automatic generation of indexes/ToC/etc, and many other features."
+
+So the goal here is to help beginners get started using Bikeshed in the simplest way possible. And then we provide some guidance for start writing the first few revisions of a specification.  We only cover the basics for many topics and refers to other documents for more complete details.  The following topics are covered here:
+
+- Installing Bikeshed - There are multiple ways to use it, but we recommend installing it to run locally.
+- Using GitHub for your specification repository, with initial empty specification source file.
+- Strategies for how to incrementally develop your specification.
+
+
+## Installing Bikeshed
+
+The [Bikeshed Documentation: Installation](https://tabatkins.github.io/bikeshed/#installing) provides details on  several different ways for how to install and run Bikeshed.  We recommend you install it on a local machine so you can run it multiple times as you make changes to the specification.
+
+- Make sure you have Python 3.7 or later.
+- Install Bikeshed with pip3, if you can.
+  - `pip3 install bikeshed`
+  - `bikeshed update`
+- Alternatively, you can use pip or pipenv, but see details at: [Bikeshed Documentation - Installing Bikeshed Itself](https://tabatkins.github.io/bikeshed/#install-final)
+- You don't need to install "Bikeshed for Development", unless you are planning to do development on Bikeshed itself.
+
+
+### Using GitHub
+
+Assuming you will be using GitHub to develop and provide public access to your specification, you should first decide whether you will create a new repo or use an existing repo.  Either way, you will then want to do the following:
+
+- Enable GitHub Pages
+- Create an initial "empty" specification file, spec.bs or index.bs.
+  - e.g. [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)
+- Set up the following files which will cause GitHub to automatically process any updates to the specification file by testing whether Bikeshed can regenerate the html.
+  - ... See [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
+
+
 
 ## Initial setup
 
 [Domenic's guide to spec excellence - Docs](http://doc/1cRVD1k-hDBGfLVwTG14P_ZqJLM4d5-Z4vpwYFb_4qks#heading=h.qc07m2oa0jm)
 (mostly tactical "how to start a new spec")
 
-### Using GitHub
+## Starting Templates
 
-Initially create an empty or mostly empty `spec.bs` file (e.g. [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)_), and associated files to automatically process updates to test the spec file and regenerate html.
+Different types of APIs could have specs that follow different patterns.  Here is a list of several:
 
-See [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
+* [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)
+* ...
 
-## Spec writing overviews
+
+
+## Sample Full Specifications following Best Practices
+
+* [Navigation API](https://wicg.github.io/navigation-api/)
+* [Prioritized Task Scheduling](https://wicg.github.io/scheduling-apis/)
+* [Close Watcher API](https://wicg.github.io/close-watcher/)
+
+
+
+## Spec writing overview
+
+### Explainer to Specification
 
 [How to read, write, and think about specs - Slides](http://go/how-to-specs#slide=id.p)
 
@@ -39,18 +91,15 @@ If your API code already exists, and you have WebIDL specifications for that cod
 
 After that, then you can add infra specs that reference the WebIDL specs.
 
-## Starting Templates
 
-Different types of APIs could have specs that follow different patterns.  Here is a list of several:
+If you have an implementation...
 
-* [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs)
-* ...
+If you don't have an implementation...
 
-## Sample Full Specifications following Best Practices
 
-* [Navigation API](https://wicg.github.io/navigation-api/)
-* [Prioritized Task Scheduling](https://wicg.github.io/scheduling-apis/)
-* [Close Watcher API](https://wicg.github.io/close-watcher/)
+Citing and linking.
+
+Infra vs webidl
 
 ## Other Intros
 
