@@ -55,6 +55,8 @@ Assuming you will be using GitHub to develop and provide public access to your s
 - Set up a custom GitHub Actions workflow with the following files which will cause GitHub to automatically process any updates to the specification file by testing whether Bikeshed can regenerate the html.
   - ... See [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
 
+- Turn on [GitHub Apps - PR Preview](http://go/gh/apps/pr-preview)
+- Maybe use [GitHub Ribbons | The GitHub Blog](https://github.blog/2008-12-19-github-ribbons/)
 
 
 ## Initial setup
