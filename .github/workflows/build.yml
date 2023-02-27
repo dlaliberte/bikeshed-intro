@@ -1,22 +1,20 @@
-# Inside .github/workflows/auto-publish.yml
-name: Automatic Publication
 
+name: Build
 on:
   pull_request: {}
   push:
-    branches: [main]
-
+    branches:
+    - main
 jobs:
-  validate-and-publish:
-    name: Validate and Publish to TR
-    runs-on: ubuntu-20.04
+  build:
+    name: Build
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: w3c/spec-prod@v2
-        with:
-          TOOLCHAIN: respec # or bikeshed
-          W3C_ECHIDNA_TOKEN: ${{ secrets.ECHIDNA_TOKEN }}
-          W3C_WG_DECISION_URL: " See Options for URLs! "
-          # Convert Editor's Draft to Working Draft!
-          W3C_BUILD_OVERRIDE: |
-            specStatus: WD
+    - uses: actions/checkout@v3
+    - uses: w3c/spec-prod@v2
+      with:
+        TOOLCHAIN: bikeshed
+        SOURCE: spec.bs
+        DESTINATION: index.html
+        GH_PAGES_BRANCH: gh-pages
+        BUILD_FAIL_ON: warning
