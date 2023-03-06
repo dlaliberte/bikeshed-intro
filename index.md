@@ -50,12 +50,13 @@ Assuming you will be using GitHub to develop and provide public access to your s
 
 - [Create a GitHub Pages site - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
   - Your new or existing repo is the "publishing source" for your spec. You need to be an admin for this source repo.
-- Create an initial "empty" specification file as your source, e.g. spec.bs or index.bs.
+- Create an initial "empty" specification file as your source, e.g. `spec.bs` or `index.bs`.
   - Here is a [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs) that you can use.
 - Set up a custom GitHub Actions workflow with the following files which will cause GitHub to automatically process any updates to the specification file by testing whether Bikeshed can regenerate the html.
   -  Follow instructions on [Configuring a publishing source for your GitHub Pages site - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) for "Publishing with a custom GitHub Actions workflow"  Click "create your own" to start creating a `.github/workflows/*` file.
   - For sample workflow actions, see [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
   - Use the following, stored in `build.yml`, but change `spec.bs` to your spec file.
+
 ```
 name: Build
 on:
