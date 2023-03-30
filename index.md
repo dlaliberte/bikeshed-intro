@@ -104,14 +104,19 @@ The template generated above will have the following sections.
 
 ## Specification Elements
 
-<img src="https://screenshot.googleplex.com/5F2rKkSYuY78x6d.png">
 
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+    A[JavaScript params] --> |binding layer| B;
+     B[C++ params] --> C;
+      C[[C++ Algorithms\n Happen Here]]-->D;
+     D[C++ result] --> |binding layer| E;
+    E[JavaScript result];
+    style A fill:#F76602,color:#231F20
+    style E fill:#F76602,color:#231F20
+    style C fill:white,color:black
+    style B fill:#24599C
+    style D fill:#24599C
 ```
 
 ## Strategies for incremental development
