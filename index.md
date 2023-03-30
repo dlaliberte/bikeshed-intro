@@ -6,7 +6,7 @@
   - [Installing Bikeshed](#installing-bikeshed)
     - [Using GitHub](#using-github)
   - [Specification Structure](#specification-structure)
-  - [Specification Elements](#specification-elements)
+  - [Specification Languages](#specification-languages)
   - [Strategies for incremental development](#strategies-for-incremental-development)
   - [Initial setup](#initial-setup)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
@@ -102,7 +102,71 @@ The template generated above will have the following sections.
 - References
   - Normative References
 
-## Specification Elements
+From Bard:
+
+- Introduction: This section provides an overview of the document and its purpose.
+- Definitions: This section defines any terms that are used in the document.
+-Requirements: This section describes the requirements that must be met in order to comply with the standard.
+- Conformance: This section describes how to determine if a product or service complies with the standard.
+- Implementation: This section describes how to implement the standard.
+- Examples: This section provides examples of how to implement the standard.
+- Testing: This section describes how to test for compliance with the standard.
+- Maintenance: This section describes how the standard will be maintained.
+- Bibliography: This section lists any resources that were used in the creation of the document.
+
+From ChatGPT:
+
+- Web standard specification documents typically include the following sections:
+
+- Introduction: This section provides an overview of the purpose and scope of the standard.
+
+- Scope: This section outlines the scope of the standard and the specific areas it covers.
+
+- Conformance: This section describes how to conform to the standard and specifies the requirements for conformance.
+
+- Terminology: This section defines key terms and concepts used in the standard.
+
+- Normative references: This section lists other standards and documents that are referenced in the standard and are necessary for its implementation.
+
+- Overview: This section provides a high-level description of the s- Requirements: This section specifies the functional requirements of the standard.
+
+- Design: This section describes the design of the standard, including its architecture, data structures, and algorithms.
+
+- API: This section specifies the programming interface for implementing the standard.
+
+- Examples: This section provides examples of how to use the standard.
+
+- Security considerations: This section describes security issues related to the standard and provides guidance on how to mitigate them.
+
+- Privacy considerations: This section describes privacy issues related to the standard and provides guidance on how to address them.
+
+- Intellectual property considerations: This section describes any intellectual property rights associated with the standard and their implications for implementers.
+
+- Acknowledgements: This section acknowledges individuals and organizations that contributed to the development of the standard.
+
+- References: This section lists references to other documents that were consulted during the development of the standard.
+
+From ChatGPT minimal outline:
+
+- Introduction: This section provides background information on the standard, its purpose, and its intended audience.
+
+- Scope: This section outlines the scope of the standard and the specific areas it covers.
+
+- Normative References: This section lists the other standards and specifications that are referenced within the document and are required for implementation of the standard.
+
+- Requirements: This section outlines the technical requirements that must be met for an implementation to be conformant.
+
+- Security Considerations: This section discusses security considerations that should be taken into account when implementing the standard.
+
+- References: This section lists other resources that may be helpful in implementing the standard.
+
+Also:
+
+- Abstract: The Abstract section provides a summary of the standard, including its purpose, scope, and key features. It's usually a short, standalone section that appears at the beginning of the document, before the Introduction.
+
+- Glossary: The Glossary section provides definitions for key terms used throughout the document. This section can be particularly helpful for readers who are not familiar with the technical vocabulary associated with the standard. The Glossary is usually located near the beginning of the document, after the Introduction and before the main body of the document.
+
+## Specification Languages
 
 
 ```mermaid
@@ -112,11 +176,12 @@ graph TD;
       C[[C++ Algorithms\n Happen Here]]-->D;
      D[C++ result] --> |binding layer| E;
     E[JavaScript result];
-    style A fill:#F76602,color:#231F20
-    style E fill:#F76602,color:#231F20
-    style C fill:white,color:black
-    style B fill:#24599C
-    style D fill:#24599C
+    classDef JavaScript fill:#F76602,color:#231F20
+    class A,E JavaScript
+    classDef CppAlgorithms fill:white,color:black
+    class C CppAlgorithms
+    classDef Cpp fill:#24599C
+    class B,D Cpp
 ```
 
 ## Strategies for incremental development
