@@ -104,7 +104,15 @@ The template generated above will have the following sections.
 
 ## Specification Elements
 
+<img src="https://screenshot.googleplex.com/5F2rKkSYuY78x6d.png">
 
+::: mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+:::
 
 ## Strategies for incremental development
 
