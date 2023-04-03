@@ -60,9 +60,9 @@ Then, it is convenient to set up a "GitHub Pages site" for publishing and servin
   - You can run `bikeshed template > spec.bs` to generate a minimal template.
   - Or you can copy this [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs).
 - Follow instructions for [Publishing with a custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site) down to selecting "GitHub Actions".
-- Click "<span style="color:lightblue">create your own</span>" link to start creating a yml script.
+- Click the "<span style="color:lightblue">create your own</span>" link to start creating a yml script.
   - Change the name of the file (after `.github/workflows/`) to `build.yml` or `spec.yml`.
-  - Use the following script, but change `spec.bs` to your spec file.
+  - Use the following script, but change `spec.bs` and `spec.html` to use your spec file.
     - For more sample workflow actions, see [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
 
 ```#yml
@@ -86,10 +86,12 @@ jobs:
         GH_PAGES_BRANCH: gh-pages
         BUILD_FAIL_ON: warning
 ```
+- Change permissions to allow `github-actions[bot]` under Settings > Actions > General > Workflow permissions.  The default is "Read repository contents and packages permission", so change that to: "Read and write permissions".  Remember to click "Save".
 
 - Run Bikeshed on your spec with `bikeshed spec spec.bs` to generate
   `spec.html`.
-- Submit your change to GitHub which should trigger the update of spec.html.
+- Submit your change to GitHub, which should then trigger the action that updates spec.html.
+- If your repo is `github.com/owner/repo-name`, then your html file will be at `owner.github.io/repo-name/spec.html`.
 
 - Optional Configurations
   - Maybe turn on [GitHub Apps - PR Preview](https://github.com/apps/pr-preview).
@@ -98,9 +100,9 @@ jobs:
 ## Specification Document Structure
 
 
-The `index.bs` template generated above will contain only a metadata section
-and an Introduction, but when you run `bikeshed spec index.html`, the
-`index.html` file will include the following sections.
+The `spec.bs` template generated above will contain only a metadata section
+and an Introduction, but when you run `bikeshed spec spec.html`, the
+`spec.html` file will include the following sections.
 
 - Metadata
 
