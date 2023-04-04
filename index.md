@@ -177,11 +177,17 @@ graph TD;
 
 ### Add WebIDL
 
-If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp>` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
+If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
+
+```html
+<xmp class="idl">
+  ...your WebIDL here...
+</xmp>
+```
 
 ### Describe WebIDL
 
-Immediately after each WebIDL block, it is important to include a short, non-normative description, or **`"domintro"`** for each property defined. These descriptive blocks are especially important for algorithmic specifications which are otherwise difficult to read.
+Immediately before or after each WebIDL block, it is important to include a short, non-normative description, or **`"domintro"`** for each property defined. These descriptive blocks are especially important for algorithmic specifications which are otherwise difficult to read.
 
 The suggested markup for a domintro block is as follows:
 
@@ -193,7 +199,7 @@ The suggested markup for a domintro block is as follows:
 </dl>
 ```
 
-Which will be rendered like this:
+Which will be rendered like this (using the CSS included below):
 
 <blockquote>
 <dl class="domintro">
