@@ -10,12 +10,17 @@
     - [Bikeshed Markdown to HTML](#bikeshed-markdown-to-html)
     - [JavaScript to Web IDL (with Infra) to JavaScript](#javascript-to-web-idl-with-infra-to-javascript)
   - [Strategies for incremental development](#strategies-for-incremental-development)
+    - [Add WebIDL](#add-webidl)
+    - [Describe WebIDL](#describe-webidl)
+    - [Add Algorithms](#add-algorithms)
+- [References](#references)
   - [Initial setup](#initial-setup)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
   - [Spec writing overview](#spec-writing-overview)
     - [Explainer to Specification](#explainer-to-specification)
   - [Other Intros and Resources](#other-intros-and-resources)
     - [Not specific to Bikeshed](#not-specific-to-bikeshed)
+- [CSS for domintro](#css-for-domintro)
 
 ## Meta
 
@@ -59,11 +64,11 @@ Then, it is convenient to set up a "GitHub Pages site" for publishing and servin
   - Or you can copy this [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs).
 - Follow instructions for [Publishing with a custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site).  I.e. go to Settings > Pages to get: "GitHub Pages".
 - Click the "<span style="color:lightblue">create your own</span>" link to start creating a yml script.
-  - Change the name of the file (after `.github/workflows/`) to `build.yml` or `spec.yml`.
+  - Enter the name of the file (after `.github/workflows/`) to `build.yml` or `spec.yml`.
   - Use the following script, but change `spec.bs` and `spec.html` to use your spec file.
     - For more sample workflow actions, see [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
 
-```#yml
+```yml
 name: Build
 on:
   pull_request: {}
@@ -131,7 +136,7 @@ Bikeshed uses a Markdown variant called [Bikeshed-flavored Markdown (BSMD)](http
 
 ### JavaScript to Web IDL (with Infra) to JavaScript
 
-<table>
+<table style="border:0">
 <tr>
 <td>
 
@@ -166,16 +171,53 @@ graph TD;
 </tr>
 </table>
 
+
+
 ## Strategies for incremental development
 
-If your API code already exists, and you have WebIDL specifications for that code, a great place to start is to copy in a subset of the WebIDL that corresponds to the public API.
+### Add WebIDL
 
-After that, then you can define your algorithms in terms of Web IDL that may reference Infra declarations.
+If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp>` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
+
+### Describe WebIDL
+
+Immediately after each WebIDL block, it is important to include a short, non-normative description, or **`"domintro"`** for each property defined. These descriptive blocks are especially important for algorithmic specifications which are otherwise difficult to read.
+
+The suggested markup for a domintro block is as follows:
+
+```html
+<dl class="domintro">
+  <dt><code>property</code>
+  <dd>
+    <p>Brief summary of property
+</dl>
+```
+
+Which will be rendered like this:
+
+<blockquote>
+<dl class="domintro">
+  <dt><code>property</code>
+  <dd>
+    <p>Brief summary of property
+</dl>
+</blockquote>
+
+### Add Algorithms
+
+Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal data structures. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.
+
+```html
+<div class="algorithm" data-algorithm="my-algorithm">
+  ...your algorithm steps here...
+</div>
+```
 
 
 Citing and linking.
 
 
+# References
 ## Initial setup
 
 [Domenic's guide to spec excellence - Docs](http://doc/1cRVD1k-hDBGfLVwTG14P_ZqJLM4d5-Z4vpwYFb_4qks#heading=h.qc07m2oa0jm)
@@ -223,3 +265,72 @@ Citing and linking.
 [Home | Internet-Draft Author Resources](https://authors.ietf.org/)
 
 [Web Platform Design Principles](https://w3ctag.github.io/design-principles/)
+
+
+# CSS for domintro
+
+(From [this CSS](https://garykac.github.io/procspec/#domintro-css))
+
+```css
+<style>
+/* domintro from https://resources.whatwg.org/standard.css */
+dl.domintro {
+  position: relative;
+  color: green;
+  background: #DDFFDD;
+  margin: 2.5em 0 2em 0;
+  padding: 1.5em 1em 0.5em 2em;
+}
+dl.domintro dt, dl.domintro dt * {
+  color: black;
+  font-size: inherit;
+}
+dl.domintro dd {
+  margin: 0.5em 0 1em 2em; padding: 0;
+}
+dl.domintro dd p {
+  margin: 0.5em 0;
+}
+dl.domintro::before {
+  content: 'For web developers (non-normative)';
+  background: green;
+  color: white;
+  padding: 0.15em 0.25em;
+  font-style: normal;
+  position: absolute;
+  top: -0.8em;
+  left: -0.8em;
+}
+</style>
+```
+
+<style>
+/* domintro from https://resources.whatwg.org/standard.css */
+dl.domintro {
+  position: relative;
+  color: green;
+  background: #DDFFDD;
+  margin: 2.5em 0 2em 0;
+  padding: 1.5em 1em 0.5em 2em;
+}
+dl.domintro dt, dl.domintro dt * {
+  color: black;
+  font-size: inherit;
+}
+dl.domintro dd {
+  margin: 0.5em 0 1em 2em; padding: 0;
+}
+dl.domintro dd p {
+  margin: 0.5em 0;
+}
+dl.domintro::before {
+  content: 'For web developers (non-normative)';
+  background: green;
+  color: white;
+  padding: 0.15em 0.25em;
+  font-style: normal;
+  position: absolute;
+  top: -0.8em;
+  left: -0.8em;
+}
+</style>
