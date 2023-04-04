@@ -7,10 +7,8 @@
     - [Using GitHub](#using-github)
   - [Specification Document Structure](#specification-document-structure)
   - [Specification Languages](#specification-languages)
-    - [Bikeshed markdown to html](#bikeshed-markdown-to-html)
-    - [JavaScript to C++ to JavaScript](#javascript-to-c-to-javascript)
-    - [JavaScript to Web IDL to JavaScript](#javascript-to-web-idl-to-javascript)
-    - [WebIDL to Infra to WebIDL](#webidl-to-infra-to-webidl)
+    - [Bikeshed Markdown to HTML](#bikeshed-markdown-to-html)
+    - [JavaScript to Web IDL (with Infra) to JavaScript](#javascript-to-web-idl-with-infra-to-javascript)
   - [Strategies for incremental development](#strategies-for-incremental-development)
   - [Initial setup](#initial-setup)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
@@ -127,37 +125,24 @@ and an Introduction, but when you run `bikeshed spec spec.html`, the
 
 ## Specification Languages
 
-### Bikeshed markdown to html
+### Bikeshed Markdown to HTML
 
-### JavaScript to C++ to JavaScript
+Bikeshed uses a Markdown variant called [Bikeshed-flavored Markdown (BSMD)](https://speced.github.io/bikeshed/#markdown).  By default, it recognizes all of the "block-level" Markdown constructs defined by [CommonMark](https://commonmark.org/), except for indented code blocks.  You can freely switch back and forth between Markdown and HTML as needed, and indent properly.
 
-```mermaid
-graph TD;
-    A[JavaScript params] --> |binding layer| B;
-    subgraph browser internals
-     B[C++ params] --> C;
-      C[[C++ Algorithms\n Happen Here]]-->D;
-     end
-     D[C++ result] --> |binding layer| E;
-    E[JavaScript result];
-    classDef JavaScript fill:#F76602,color:#231F20
-    class A,E JavaScript
-    classDef CppAlgorithms fill:white,color:black
-    class C CppAlgorithms
-    classDef Cpp fill:#24599C
-    class B,D Cpp
-```
+### JavaScript to Web IDL (with Infra) to JavaScript
 
-### JavaScript to Web IDL to JavaScript
+<table>
+<tr>
+<td>
 
 ```mermaid
 graph TD;
-    A[JavaScript params] --> |JS -> Web IDL\nconversion rules| B;
-    subgraph browser internals
+    A[JavaScript params] --> |JS -> Web IDL| B;
+    subgraph .
      B[Web IDL params] --> C;
-      C[[Spec Algorithms\n Happen Here]]-->D;
+      C[[Spec Algorithms\n Using Web IDL and Infra]]-->D;
      end
-     D[Web IDL result] --> |Web IDL -> JS\nconversion rules| E;
+     D[Web IDL result] --> |Web IDL -> JS| E;
     E[JavaScript result];
     classDef JavaScript fill:#F76602,color:#231F20
     class A,E JavaScript
@@ -167,23 +152,29 @@ graph TD;
     class B,D Cpp
 ```
 
-### WebIDL to Infra to WebIDL
+<td>
+<td style="align:top">
+ JS types: <br/>
+ boolean, number, array, object, ...
+ <br/><br/><br/>
+ Web IDL types:<br/>
+ boolean, unsigned long, sequence, dictionary, ...
+  <br/><br/><br/>
+ Infra types: ...
+  <br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/>
+</td>
+</tr>
+</table>
 
 ## Strategies for incremental development
 
 If your API code already exists, and you have WebIDL specifications for that code, a great place to start is to copy in a subset of the WebIDL that corresponds to the public API.
 
-After that, then you can add infra specs that reference the WebIDL specs.
-
-
-If you have an implementation...
-
-If you don't have an implementation...
+After that, then you can define your algorithms in terms of Web IDL that may reference Infra declarations.
 
 
 Citing and linking.
 
-Infra vs WebIDL
 
 ## Initial setup
 
