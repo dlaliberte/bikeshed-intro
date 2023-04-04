@@ -157,7 +157,7 @@ graph TD;
     class B,D Cpp
 ```
 
-<td>
+</td>
 <td style="align:top">
  JS types: <br/>
  boolean, number, array, object, ...
