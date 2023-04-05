@@ -13,11 +13,10 @@
     - [Add WebIDL](#add-webidl)
     - [Describe WebIDL](#describe-webidl)
     - [Add Algorithms](#add-algorithms)
+    - [Definitions and Linking](#definitions-and-linking)
 - [References](#references)
   - [Initial setup](#initial-setup)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
-  - [Spec writing overview](#spec-writing-overview)
-    - [Explainer to Specification](#explainer-to-specification)
   - [Other Intros and Resources](#other-intros-and-resources)
     - [Not specific to Bikeshed](#not-specific-to-bikeshed)
 - [CSS for domintro](#css-for-domintro)
@@ -201,6 +200,7 @@ The suggested markup for a domintro block is as follows:
     <p>Brief summary of property
 </dl>
 ```
+
 <!-- can't show the rendering yet.
 Which will be rendered like this (using the CSS included below):
 
@@ -224,7 +224,9 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 ```
 
 
-Citing and linking.
+### Definitions and Linking
+
+Defining a term is as easy as wrapping a `<dfn>` element around it. Most of the time, this is all you'll need to do.  Bikeshed can then automatically link from each use of a defined term to its definition.
 
 
 # References
@@ -243,15 +245,11 @@ Citing and linking.
 
 
 
-## Spec writing overview
-
-### Explainer to Specification
-
-[How to read, write, and think about specs - Slides](http://go/how-to-specs#slide=id.p)
-
-
 
 ## Other Intros and Resources
+
+
+* Slides: [How to read, write, and think about specs](http://go/how-to-specs#slide=id.p) and video: [Writing good specs](http://dr/file/d/0BwPS_JpKyELWX25uZUtfR1JrQ1U/view?resourcekey=0-W45El7Ho8QRHdwb3TAKnMA)
 
 * A very helpful document, by Gary Kac, similar in purpose to this one:
 [Writing Procedural Specs](https://garykac.github.io/procspec/)
@@ -260,26 +258,24 @@ Citing and linking.
 
 * [CSS Spec Preprocessor](https://api.csswg.org/bikeshed/)
 
-* [Sample W3C Specification](https://w3c.github.io/tr-design/src/README)
+* [Sample W3C Specification](https://w3c.github.io/tr-design/src/README) and
 
 ### Not specific to Bikeshed
 
-[Writing Promise-Using Specifications](https://www.w3.org/2001/tag/doc/promises-guide)
+* [Writing Promise-Using Specifications](https://www.w3.org/2001/tag/doc/promises-guide)
 
-[Draft Spec - Read Write Web Community Group](https://www.w3.org/community/rww/wiki/Draft_Spec)
+* [Draft Spec - Read Write Web Community Group](https://www.w3.org/community/rww/wiki/Draft_Spec)
 
-[QA Framework: Specification Guidelines](http://go/w3cstd/qaframe-spec/)
+* [QA Framework: Specification Guidelines](http://go/w3cstd/qaframe-spec/)
 
-[Chromium Specification Mentors](http://go/chromium-spec-mentors)
+* [Chromium Specification Mentors](http://go/chromium-spec-mentors)
 
-[Home | Internet-Draft Author Resources](https://authors.ietf.org/)
+* [Home | Internet-Draft Author Resources](https://authors.ietf.org/)
 
-[Web Platform Design Principles](https://w3ctag.github.io/design-principles/)
+* [Web Platform Design Principles](https://w3ctag.github.io/design-principles/)
 
 
 # CSS for domintro
-
-(From [this CSS](https://garykac.github.io/procspec/#domintro-css))
 
 ```css
 <style>
@@ -314,33 +310,8 @@ dl.domintro::before {
 </style>
 ```
 
+<!-- can't include style yet in github markdown
 <style>
-/* domintro from https://resources.whatwg.org/standard.css */
-dl.domintro {
-  position: relative;
-  color: green;
-  background: #DDFFDD;
-  margin: 2.5em 0 2em 0;
-  padding: 1.5em 1em 0.5em 2em;
-}
-dl.domintro dt, dl.domintro dt * {
-  color: black;
-  font-size: inherit;
-}
-dl.domintro dd {
-  margin: 0.5em 0 1em 2em; padding: 0;
-}
-dl.domintro dd p {
-  margin: 0.5em 0;
-}
-dl.domintro::before {
-  content: 'For web developers (non-normative)';
-  background: green;
-  color: white;
-  padding: 0.15em 0.25em;
-  font-style: normal;
-  position: absolute;
-  top: -0.8em;
-  left: -0.8em;
-}
+...
 </style>
+-->
