@@ -226,7 +226,7 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 
 ### Definitions and Linking
 
-[Defining a term with Bikeshed](https://speced.github.io/bikeshed/#definitions) is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  References to a type or object definition should be wrapped in `[=` and `=]`.  Here is an example of a simple definition and a reference to it.
+[Defining a term with Bikeshed](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  References to a definition should be wrapped in `[=` and `=]`.  Here is an example of a simple definition and a reference to it.
 
 ```html
 The user agent has a <dfn>really useful object</dfn> that ...
