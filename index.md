@@ -207,8 +207,8 @@ graph TD;
 
 ## Strategies for incremental development
 
-Once you have created an empty a spec document, it might be easiest to
-follow the following steps to incrementally enhance your spec.
+Once you have created an empty spec document, it might be easiest to
+follow the following steps to incrementally grow your spec.
 ### Add WebIDL
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
@@ -259,7 +259,7 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 
 ### Definitions and Linking
 
-[Defining a term with Bikeshed](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  References to a definition should be wrapped in `[=` and `=]`.  Here is an example of a simple definition and a reference to it.
+[Defining a term](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  References to a definition should be wrapped in `[=` and `=]`.  Here is an example of a simple definition and a reference to it.
 
 ```html
 The user agent has a <dfn>really useful object</dfn> that ...
