@@ -139,7 +139,7 @@ Bikeshed uses a Markdown variant called [Bikeshed-flavored Markdown (BSMD)](http
 
 <table style="border:0">
 <tr>
-<td>
+<td style="border:0">
 
 ```mermaid
 graph TD;
@@ -159,7 +159,7 @@ graph TD;
 ```
 
 </td>
-<td style="align:top">
+<td style="border: 0; align:top">
  JS types: <br/>
  boolean, number, array, object, ...
  <br/><br/><br/>
@@ -176,6 +176,8 @@ graph TD;
 
 ## Strategies for incremental development
 
+Once you have created an empty a spec document, it might be easiest to
+follow the following steps to incrementally enhance your spec.
 ### Add WebIDL
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
@@ -199,7 +201,7 @@ The suggested markup for a domintro block is as follows:
     <p>Brief summary of property
 </dl>
 ```
-
+<!-- can't show the rendering yet.
 Which will be rendered like this (using the CSS included below):
 
 <blockquote>
@@ -209,6 +211,7 @@ Which will be rendered like this (using the CSS included below):
     <p>Brief summary of property
 </dl>
 </blockquote>
+-->
 
 ### Add Algorithms
 
