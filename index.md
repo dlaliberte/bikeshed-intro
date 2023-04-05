@@ -62,7 +62,8 @@ Then, it is convenient to set up a "GitHub Pages site" for publishing and servin
 - Create an initial "empty" specification file as your source, e.g. `spec.bs` or `index.bs`.
   - You can run `bikeshed template > spec.bs` to generate a minimal template.
   - Or you can copy this [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs).
-- Follow instructions for [Publishing with a custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site).  I.e. go to Settings > Pages to get: "GitHub Pages".
+- Follow instructions for [Publishing with a custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site).  I.e. go to Settings > Pages to show "GitHub Pages"
+- Under Build and deployment, Source, select "GitHub Actions" if not already selected.
 - Click the "<span style="color:lightblue">create your own</span>" link to start creating a yml script.
   - Enter the name of the file (after `.github/workflows/`) to `build.yml` or `spec.yml`.
   - Use the following script, but change `spec.bs` and `spec.html` to use your spec file.
