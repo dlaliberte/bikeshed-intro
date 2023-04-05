@@ -98,7 +98,7 @@ Then, it is convenient to set up a "GitHub Pages site" for publishing and servin
 
 - Follow instructions for [Publishing with a custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site).  I.e. go to "Settings" > "Pages" to show "GitHub Pages"
 - Under "Build and deployment" > "Source", select "GitHub Actions" if not already selected.
-- Click the "<span style="color:lightblue">create your own</span>" link to start creating a yml script.
+- Click the "create your own" link to start creating a yml script.
   - Enter the name of the file (after `.github/workflows/`) to `build.yml` or `some-other.yml`.
   - Use the following script, changing `index.bs` and `index.html` if need be.
     - For more sample workflow actions, see [Spec Prod Documentation](https://w3c.github.io/spec-prod/)
@@ -131,7 +131,7 @@ jobs:
 - If your repo is `github.com/owner/repo-name`, then your html file will be at `owner.github.io/repo-name/index.html`.
 
 - Optional Configurations
-  - Maybe turn on [GitHub Apps - PR Preview](https://github.com/apps/pr-preview) for any repo that are not of one of the blanket-installed orgs listed there.
+  - Maybe turn on [GitHub Apps - PR Preview](https://github.com/apps/pr-preview) for any repo that are not of one of the blanket-installed orgs listed there.  If you used the `npx` command above, the configuration file will be installed for you.
 
 ## Specification Document Structure
 
