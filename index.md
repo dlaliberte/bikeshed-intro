@@ -166,7 +166,7 @@ graph TD;
  boolean, unsigned long, sequence, dictionary, ...
   <br/><br/><br/>
  Infra types: ...
-  <br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/>
+  <br/><br/><br/><br/> <br/><br/><br/><br/>
 </td>
 </tr>
 </table>
@@ -226,8 +226,14 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 
 ### Definitions and Linking
 
-Defining a term is as easy as wrapping a `<dfn>` element around it. Most of the time, this is all you'll need to do.  Bikeshed can then automatically link from each use of a defined term to its definition.
+[Defining a term with Bikeshed](https://speced.github.io/bikeshed/#definitions) is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  References to a type or object definition should be wrapped in `[=` and `=]`.  Here is an example of a simple definition and a reference to it.
 
+```html
+The user agent has a <dfn>really useful object</dfn> that ...
+...
+
+1. If the [=really useful object=] is null, then …
+```
 
 # References
 ## Initial setup
