@@ -214,7 +214,7 @@ follow the following steps to incrementally grow your spec.
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
 
-```html
+```markdown
 <xmp class="idl">
   ...your WebIDL here...
 </xmp>
@@ -226,7 +226,7 @@ Immediately before or after each WebIDL block, it is important to include a shor
 
 The suggested markup for a domintro block is as follows:
 
-```html
+```markdown
 <dl class="domintro">
   <dt><code>property</code>
   <dd>
@@ -250,9 +250,12 @@ Which will be rendered like this (using the CSS included below):
 
 Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal data structures. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.
 
-```html
+```markdown
 <div algorithm="my-algorithm">
   ...your algorithm steps here...
+  1. step-1
+  1. step-2
+  1. step-3
 </div>
 ```
 
@@ -260,13 +263,14 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 
 ### Definitions and Linking
 
-[Defining a term](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  References to a definition should be wrapped in `[=` and `=]`.  Here is an example of a simple definition and a reference to it.
+[Defining a term](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  You can reference a definition by its name with `[=name=]`, or you can specify a different display name with `[=name|display name=]`.  Here is an example of a simple definition and a couple different references to it.
 
-```html
+```markdown
 The user agent has a <dfn>really useful object</dfn> that ...
 ...
 
 1. If the [=really useful object=] is null, then …
+1. If the [=really useful object|RUO=] is not null, then …
 ```
 
 #### Dfns in WebIDL
