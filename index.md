@@ -15,10 +15,10 @@
   - [Add WebIDL](#add-webidl)
   - [Describe WebIDL](#describe-webidl)
   - [Add Algorithms](#add-algorithms)
-  - [Defining Attributes](#defining-attributes)
-  - [Defining Methods](#defining-methods)
-  - [Defining Constructors](#defining-constructors)
-  - [Defining Terms](#defining-terms)
+  - [Define Attributes](#define-attributes)
+  - [Define Methods](#define-methods)
+  - [Define Constructors](#define-constructors)
+  - [Define Terms](#define-terms)
   - [Examples of Different kinds of Specifications](#examples-of-different-kinds-of-specifications)
 - [Related Resources](#related-resources)
   - [Initial setup](#initial-setup)
@@ -212,8 +212,8 @@ graph TD;
  <b>Web IDL types</b>:<br/>
  boolean, unsigned long, sequence, dictionary, ...
   <br/><br/>
- <b>Infra types</b>: ...
-  <br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/>
+ <b>Infra types</b>: boolean, bytes (for strings), lists, ordered maps
+  <br/><br/><br/><br/><br/><br/><br/><br/>
 </td>
 </tr>
 </table>
@@ -277,7 +277,7 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 </div>
 ```
 
-## Defining Attributes
+## Define Attributes
 
 Each WebIDL attribute of an object is actually a getter/setter pair. By default these refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms. For example, given:
 
@@ -311,7 +311,7 @@ Within getter steps, you implicitly have access to the instance, `[=this=]`. Wit
 
 Readonly attributes won't have setter steps.
 
-## Defining Methods
+## Define Methods
 
 Every method needs an algorithm defining it. Given an interface like:
 
@@ -337,7 +337,7 @@ Use markup like:
 
 Within method steps, you implicitly have access to `[=this=]`, the object being operated on.
 
-## Defining Constructors
+## Define Constructors
 
 If you don't define a constructor for a class, one gets created automatically for you that just throws. If you actually want your object to be constructable, it's very similar to methods. Given IDL like:
 
@@ -363,7 +363,7 @@ Use markup like:
 
 Within constructor steps, you implicitly have access to `[=this=]`, the instance object being operated on.
 
-## Defining Terms
+## Define Terms
 
 [Defining a term](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  You can reference a definition by its name with `[=name=]`, or you can specify a different display name with `[=name|display name=]`.  Here is an example of a simple definition and a couple different references to it.
 
@@ -428,6 +428,7 @@ The user agent has a <dfn>really useful object</dfn> that ...
 
 * [Web Platform Design Principles](https://w3ctag.github.io/design-principles/)
 
+* [Self-Review Questionnaire: Security and Privacy](https://www.w3.org/TR/security-privacy-questionnaire/)
 
 # CSS for domintro
 
