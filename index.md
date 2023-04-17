@@ -12,16 +12,15 @@
     - [Bikeshed Markdown to HTML](#bikeshed-markdown-to-html)
     - [JavaScript to Web IDL (with Infra) to JavaScript](#javascript-to-web-idl-with-infra-to-javascript)
   - [A Strategy for incremental development](#a-strategy-for-incremental-development)
-    - [Add WebIDL](#add-webidl)
-    - [Describe WebIDL](#describe-webidl)
-    - [Add Algorithms](#add-algorithms)
-      - [Defining Attributes](#defining-attributes)
-      - [Defining Methods](#defining-methods)
-      - [Defining Constructors](#defining-constructors)
-    - [Definitions and Linking](#definitions-and-linking)
-      - [Dfns in WebIDL](#dfns-in-webidl)
+  - [Add WebIDL](#add-webidl)
+  - [Describe WebIDL](#describe-webidl)
+  - [Add Algorithms](#add-algorithms)
+  - [Defining Attributes](#defining-attributes)
+  - [Defining Methods](#defining-methods)
+  - [Defining Constructors](#defining-constructors)
+  - [Defining Terms](#defining-terms)
   - [Examples of Different kinds of Specifications](#examples-of-different-kinds-of-specifications)
-- [References](#references)
+- [Related Resources](#related-resources)
   - [Initial setup](#initial-setup)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
   - [Other Intros and Resources](#other-intros-and-resources)
@@ -222,14 +221,14 @@ graph TD;
 
 ## A Strategy for incremental development
 
-Once you have created an empty spec document, it might be easiest to follow the following steps to incrementally grow your spec.
+Once you have created an initial spec document, it might be easiest to follow the following steps to incrementally grow your spec.
 
-1. Start with Template
+1. Start with a Template or similar document
 2. Add WebIDL
 3. Describe WebIDL
 4. Add Algorithms
 
-### Add WebIDL
+## Add WebIDL
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
 
@@ -239,7 +238,7 @@ If you have WebIDL specifications for your API code, that is a great place to st
 </xmp>
 ```
 
-### Describe WebIDL
+## Describe WebIDL
 
 Immediately before or after each WebIDL block, it is important to include a short, non-normative description, or **`"domintro"`** for each property defined. These descriptive blocks are especially important for algorithmic specifications which are otherwise difficult to read.
 
@@ -265,9 +264,9 @@ Which will be rendered like this (using the CSS included below):
 </blockquote>
 -->
 
-### Add Algorithms
+## Add Algorithms
 
-Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal data structures. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.
+Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal state. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.
 
 ```markdown
 <div algorithm="my-algorithm">
@@ -278,21 +277,25 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 </div>
 ```
 
-#### Defining Attributes
+## Defining Attributes
 
-A WebIDL attribute is actually a getter/setter pair. By default (if you don't say anything special), these both defer to some internal state of the object, not directly observable by author-facing JS. It's this internal state that should be referenced by other spec algorithms. For example, given:
+Each WebIDL attribute of an object is actually a getter/setter pair. By default these refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms. For example, given:
 
-```webidl
+```markdown webidl
+<xmp class="idl">
 interface Foo {
   attribute DOMString bar;
 };
+</xmp>
 ```
 
-If you don't define anything more complex, this implies that Foo instances have a `[[bar]]` internal slot, and the `bar` attribute's getter and setter both interact with that. When referencing the attribute in spec algorithms, you *must* refer to the internal slot, not the author-facing property (as those can be observed/intercepted by author code): use text like `the {{Foo/bar}} internal slot`. If you're doing something non-trivial, explicitly defining a `<dfn for=Foo>\[[bar]]</dfn>` name is appropriate, but this isn't necessary if you're just using the default behaviors. (Bikeshed doesn't auto-define the `[[...]]` slot name for you yet, pending some WebIDL issues being resolved.)
+This implies, by default, that `Foo` instances have a `[[bar]]` internal slot, and the `bar` attribute's getter and setter access and modify that slot, respectively. Note that when referencing the attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  Use text like "...`the {{Foo/bar}} internal slot`...".
 
-If your getter or setter need to do something non-trivial, like reacting to the value, or verifying its state in more complicated ways than the WebIDL type system can do, you'll need to write a getter/setter algorithm yourself. Use the following markup:
+If you're doing something non-trivial, you may need to explicitly define a name like: `<dfn for=Foo>\[[bar]]</dfn>` (since Bikeshed doesn't auto-define the `[[bar]]` slot name for you yet).
 
-```html
+If your attribute getter or setter need to do something non-trivial, such as reacting to its state ways that the WebIDL type system does not, you'll need to write a getter/setter algorithm yourself. Use the following markup:
+
+```markdown webidl
 <div algorithm="Foo.bar">
   The <dfn attribute for=Foo>bar</dfn> [=getter steps=] are:
 
@@ -304,23 +307,25 @@ If your getter or setter need to do something non-trivial, like reacting to the 
 </div>
 ```
 
-Within getter steps, you implicitly have access to `[=this=]`, the object being gotten from. Within setter steps, you have access to `[=this=]` and `[=the given value=]`, which is the value being set (and which has already been checked/transformed by WebIDL into the expected value type).
+Within getter steps, you implicitly have access to the instance, `[=this=]`. Within setter steps, you have access to `[=this=]` and `[=the given value=]`, which is the value being set (and which has already been checked/transformed by WebIDL into the expected value type).
 
 Readonly attributes won't have setter steps.
 
-#### Defining Methods
+## Defining Methods
 
 Every method needs an algorithm defining it. Given an interface like:
 
-```webidl
+```markdown webidl
+<xmp class="idl">
 interface Foo {
   long baz(DOMString arg1);
 };
+</xmp>
 ```
 
 Use markup like:
 
-```html
+```markdown webidl
 <div algorithm="Foo.baz()">
   The <dfn method for=Foo>baz(DOMString arg1)</dfn> [=method steps=] are:
 
@@ -332,19 +337,21 @@ Use markup like:
 
 Within method steps, you implicitly have access to `[=this=]`, the object being operated on.
 
-#### Defining Constructors
+## Defining Constructors
 
-If you don't define a constructor, one gets created automatically for you that just throws. If you actually want your object to be constructable, it's very similar to methods. Given IDL like:
+If you don't define a constructor for a class, one gets created automatically for you that just throws. If you actually want your object to be constructable, it's very similar to methods. Given IDL like:
 
-```webidl
+```markdown webidl
+<xmp class="idl">
 interface Foo {
   constructor(DOMString arg1);
 };
+</xmp>
 ```
 
 Use markup like:
 
-```html
+```markdown webidl
 <div algorithm="Foo()">
   The <dfn constructor for=Foo lt="Foo(arg1)">new Foo(DOMString arg1)</dfn> [=constructor steps=] are:
 
@@ -352,11 +359,11 @@ Use markup like:
 </div>
 ```
 
-(Bikeshed is gonna make this slightly easier, see <https://github.com/speced/bikeshed/issues/2525>.)
+(Bikeshed will make this slightly easier in the future, see <https://github.com/speced/bikeshed/issues/2525>.)
 
-Within constructor steps, you implicitly have access to `[=this=]`, the object being operated on.
+Within constructor steps, you implicitly have access to `[=this=]`, the instance object being operated on.
 
-### Definitions and Linking
+## Defining Terms
 
 [Defining a term](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  You can reference a definition by its name with `[=name=]`, or you can specify a different display name with `[=name|display name=]`.  Here is an example of a simple definition and a couple different references to it.
 
@@ -365,26 +372,19 @@ The user agent has a <dfn>really useful object</dfn> that ...
 ...
 
 1. If the [=really useful object=] is null, then …
-1. If the [=really useful object|RUO=] is not null, then …
+2. If the [=really useful object|RUO=] is not null, then …
 ```
-
-#### Dfns in WebIDL
-
-
-Intermediate objects, not part of the webidl
-Data types.
-structs.  slots older term for structs.
-
 
 
 ## Examples of Different kinds of Specifications
 
-If you are monkey patching an existing specificationo, ...
+* If you are monkey patching an existing specifications, ...
+* ...
 
 
 
+# Related Resources
 
-# References
 ## Initial setup
 
 [Domenic's guide to spec excellence - Docs](http://doc/1cRVD1k-hDBGfLVwTG14P_ZqJLM4d5-Z4vpwYFb_4qks#heading=h.qc07m2oa0jm)
@@ -394,7 +394,7 @@ If you are monkey patching an existing specificationo, ...
 
 ## Sample Full Specifications following Best Practices
 
-* [Navigation API](https://wicg.github.io/navigation-api/) - need new link.
+* [Navigation API](https://wicg.github.io/navigation-api/) - (moving to the HTML Standard - new link forthcoming)
 * [Prioritized Task Scheduling](https://wicg.github.io/scheduling-apis/)
 * [Close Watcher API](https://wicg.github.io/close-watcher/)
 
@@ -406,14 +406,13 @@ If you are monkey patching an existing specificationo, ...
 
 * Slides: [How to read, write, and think about specs](http://go/how-to-specs#slide=id.p) and video: [Writing good specs](http://dr/file/d/0BwPS_JpKyELWX25uZUtfR1JrQ1U/view?resourcekey=0-W45El7Ho8QRHdwb3TAKnMA)
 
-* A very helpful document, by Gary Kac, similar in purpose to this one:
-[Writing Procedural Specs](https://garykac.github.io/procspec/)
+* [Writing Procedural Specs](https://garykac.github.io/procspec/) - A very helpful document, by Gary Kac, similar in purpose to this one.
 
 * [Bikeshed Cheat Sheet by apowers313 - Download free from Cheatography - Cheatography.com: Cheat Sheets For Every Occasion](https://cheatography.com/apowers313/cheat-sheets/bikeshed/)
 
 * [CSS Spec Preprocessor](https://api.csswg.org/bikeshed/)
 
-* [Sample W3C Specification](https://w3c.github.io/tr-design/src/README) and
+* [Sample W3C Specification](https://w3c.github.io/tr-design/src/README)
 
 ### Not specific to Bikeshed
 
