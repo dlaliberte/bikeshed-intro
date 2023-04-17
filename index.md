@@ -11,13 +11,16 @@
   - [Specification Languages](#specification-languages)
     - [Bikeshed Markdown to HTML](#bikeshed-markdown-to-html)
     - [JavaScript to Web IDL (with Infra) to JavaScript](#javascript-to-web-idl-with-infra-to-javascript)
-  - [Strategies for incremental development](#strategies-for-incremental-development)
+  - [A Strategy for incremental development](#a-strategy-for-incremental-development)
     - [Add WebIDL](#add-webidl)
     - [Describe WebIDL](#describe-webidl)
     - [Add Algorithms](#add-algorithms)
-      - [How to write algorithms correctly.](#how-to-write-algorithms-correctly)
+      - [Defining Attributes](#defining-attributes)
+      - [Defining Methods](#defining-methods)
+      - [Defining Constructors](#defining-constructors)
     - [Definitions and Linking](#definitions-and-linking)
       - [Dfns in WebIDL](#dfns-in-webidl)
+  - [Examples of Different kinds of Specifications](#examples-of-different-kinds-of-specifications)
 - [References](#references)
   - [Initial setup](#initial-setup)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
@@ -136,29 +139,37 @@ jobs:
 ## Specification Document Structure
 
 
-The `index.bs` template generated above will contain only a metadata section
-and an Introduction, but when you run `bikeshed spec index.html`, the
-`index.html` file will include the following sections.
+The `index.bs` template generated above will contain only a `"metadata"` section and an Introduction, but when you run `bikeshed spec index.html`, the
+`index.html` file will include the following sections (plus  two added sections which are required in all specifications).
 
-- **Metadata**: Info from `"metadata"`.
+- **Title**:
+  - More details about this document:
+    - **This version**: the URL you provide in metadata
+    - **Editor**: the name and links you provide in metadata
+    - **copywright** generated
 
-- **Abstract**: From `"metadata"`.
+- **Abstract**: From the metadata.
 
-- **Status of this document**: From `"metadata"`.
+- **Status of this document**: From the metadata.
+
+- **Table of Contents**: Generated automatically from sections.
 
 - **Introduction**: This section provides an overview of the purpose and scope of the standard.
 
-- **API Sections**: These sections specify the programming interface for implementing the standard.
+- **Security considerations**: _Add this section_, which describes security issues related to the standard and provides guidance on how to mitigate them.
 
-- **Definitions**: This section defines key terms and concepts used in the standard.
-
-- **Security considerations**: This section describes security issues related to the standard and provides guidance on how to mitigate them.
-
-- **Privacy considerations**: This section describes privacy issues related to the standard and provides guidance on how to address them.
+- **Privacy considerations**: _Add this section_, which describes privacy issues related to the standard and provides guidance on how to address them.
 
 - **Conformance**: This section describes how to conform to the standard and specifies the requirements for conformance.
 
-- **Normative References**: This section lists the other standards and specifications that are referenced within the document and are required for implementation of the standard.
+  - **Document conventions**: Generated content.
+
+  - **Conformant Algorithms**: Generated content.
+
+- **References**:
+
+  - **Normative References**: This section lists the other standards and specifications that are referenced within the document and are required for implementation of the standard.
+
 
 
 ## Specification Languages
@@ -168,6 +179,10 @@ and an Introduction, but when you run `bikeshed spec index.html`, the
 Bikeshed uses a Markdown variant called [Bikeshed-flavored Markdown (BSMD)](https://speced.github.io/bikeshed/#markdown).  By default, it recognizes all of the "block-level" Markdown constructs defined by [CommonMark](https://commonmark.org/), except for indented code blocks.  You can freely switch back and forth between Markdown and HTML as needed, and indent properly.
 
 ### JavaScript to Web IDL (with Infra) to JavaScript
+
+In a browser, JavaScript calls to browser APIs result in...
+
+WebIDL and Infra are complementary technologies. WebIDL is used to define the interfaces of web APIs, while Infra is used to implement those interfaces.
 
 <table style="border:0">
 <tr>
@@ -205,11 +220,15 @@ graph TD;
 </table>
 
 
+## A Strategy for incremental development
 
-## Strategies for incremental development
+Once you have created an empty spec document, it might be easiest to follow the following steps to incrementally grow your spec.
 
-Once you have created an empty spec document, it might be easiest to
-follow the following steps to incrementally grow your spec.
+1. Start with Template
+2. Add WebIDL
+3. Describe WebIDL
+4. Add Algorithms
+
 ### Add WebIDL
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
@@ -259,7 +278,83 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 </div>
 ```
 
-#### How to write algorithms correctly.
+#### Defining Attributes
+
+A WebIDL attribute is actually a getter/setter pair. By default (if you don't say anything special), these both defer to some internal state of the object, not directly observable by author-facing JS. It's this internal state that should be referenced by other spec algorithms. For example, given:
+
+```webidl
+interface Foo {
+  attribute DOMString bar;
+};
+```
+
+If you don't define anything more complex, this implies that Foo instances have a `[[bar]]` internal slot, and the `bar` attribute's getter and setter both interact with that. When referencing the attribute in spec algorithms, you *must* refer to the internal slot, not the author-facing property (as those can be observed/intercepted by author code): use text like `the {{Foo/bar}} internal slot`. If you're doing something non-trivial, explicitly defining a `<dfn for=Foo>\[[bar]]</dfn>` name is appropriate, but this isn't necessary if you're just using the default behaviors. (Bikeshed doesn't auto-define the `[[...]]` slot name for you yet, pending some WebIDL issues being resolved.)
+
+If your getter or setter need to do something non-trivial, like reacting to the value, or verifying its state in more complicated ways than the WebIDL type system can do, you'll need to write a getter/setter algorithm yourself. Use the following markup:
+
+```html
+<div algorithm="Foo.bar">
+  The <dfn attribute for=Foo>bar</dfn> [=getter steps=] are:
+
+  1. Return [=this=]'s {{Foo/[[internalBar]]}} slot.
+
+  The {{Foo/bar}} [=setter steps=] are:
+
+  1. Set [=this=]'s {{Foo/[[internalBar]]}} slot to [=the given value=].
+</div>
+```
+
+Within getter steps, you implicitly have access to `[=this=]`, the object being gotten from. Within setter steps, you have access to `[=this=]` and `[=the given value=]`, which is the value being set (and which has already been checked/transformed by WebIDL into the expected value type).
+
+Readonly attributes won't have setter steps.
+
+#### Defining Methods
+
+Every method needs an algorithm defining it. Given an interface like:
+
+```webidl
+interface Foo {
+  long baz(DOMString arg1);
+};
+```
+
+Use markup like:
+
+```html
+<div algorithm="Foo.baz()">
+  The <dfn method for=Foo>baz(DOMString arg1)</dfn> [=method steps=] are:
+
+  1. Do something to |arg1|.
+  2. If [=this's=] {{Foo/bar}} attribute is null, [=throw=] a TypeError.
+  3. Otherwise, return 4.
+</div>
+```
+
+Within method steps, you implicitly have access to `[=this=]`, the object being operated on.
+
+#### Defining Constructors
+
+If you don't define a constructor, one gets created automatically for you that just throws. If you actually want your object to be constructable, it's very similar to methods. Given IDL like:
+
+```webidl
+interface Foo {
+  constructor(DOMString arg1);
+};
+```
+
+Use markup like:
+
+```html
+<div algorithm="Foo()">
+  The <dfn constructor for=Foo lt="Foo(arg1)">new Foo(DOMString arg1)</dfn> [=constructor steps=] are:
+
+  ...
+</div>
+```
+
+(Bikeshed is gonna make this slightly easier, see <https://github.com/speced/bikeshed/issues/2525>.)
+
+Within constructor steps, you implicitly have access to `[=this=]`, the object being operated on.
 
 ### Definitions and Linking
 
@@ -276,6 +371,17 @@ The user agent has a <dfn>really useful object</dfn> that ...
 #### Dfns in WebIDL
 
 
+Intermediate objects, not part of the webidl
+Data types.
+structs.  slots older term for structs.
+
+
+
+## Examples of Different kinds of Specifications
+
+If you are monkey patching an existing specificationo, ...
+
+
 
 
 # References
@@ -288,7 +394,7 @@ The user agent has a <dfn>really useful object</dfn> that ...
 
 ## Sample Full Specifications following Best Practices
 
-* [Navigation API](https://wicg.github.io/navigation-api/)
+* [Navigation API](https://wicg.github.io/navigation-api/) - need new link.
 * [Prioritized Task Scheduling](https://wicg.github.io/scheduling-apis/)
 * [Close Watcher API](https://wicg.github.io/close-watcher/)
 
