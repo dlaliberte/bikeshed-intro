@@ -18,8 +18,8 @@
   - [Define Attributes](#define-attributes)
   - [Define Methods](#define-methods)
   - [Define Constructors](#define-constructors)
-  - [Define Terms](#define-terms)
-  - [Examples of Different kinds of Specifications](#examples-of-different-kinds-of-specifications)
+  - [Define Other Terms](#define-other-terms)
+  - [Examples of Different Kinds of Specifications](#examples-of-different-kinds-of-specifications)
 - [Related Resources](#related-resources)
   - [Initial setup](#initial-setup)
   - [Sample Full Specifications following Best Practices](#sample-full-specifications-following-best-practices)
@@ -232,7 +232,7 @@ Once you have created an initial spec document, it might be easiest to follow th
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
 
-```markdown
+```html
 <xmp class="idl">
   ...your WebIDL here...
 </xmp>
@@ -244,7 +244,7 @@ Immediately before or after each WebIDL block, it is important to include a shor
 
 The suggested markup for a domintro block is as follows:
 
-```markdown
+```html
 <dl class="domintro">
   <dt><code>property</code>
   <dd>
@@ -268,7 +268,7 @@ Which will be rendered like this (using the CSS included below):
 
 Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal state. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.
 
-```markdown
+```html
 <div algorithm="my-algorithm">
   ...your algorithm steps here...
   1. step-1
@@ -281,7 +281,7 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 
 Each WebIDL attribute of an object is actually a getter/setter pair. By default these refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms. For example, given:
 
-```markdown webidl
+```html
 <xmp class="idl">
 interface Foo {
   attribute DOMString bar;
@@ -295,7 +295,7 @@ If you're doing something non-trivial, you may need to explicitly define a name 
 
 If your attribute getter or setter need to do something non-trivial, such as reacting to its state ways that the WebIDL type system does not, you'll need to write a getter/setter algorithm yourself. Use the following markup:
 
-```markdown webidl
+```html
 <div algorithm="Foo.bar">
   The <dfn attribute for=Foo>bar</dfn> [=getter steps=] are:
 
@@ -315,7 +315,7 @@ Readonly attributes won't have setter steps.
 
 Every method needs an algorithm defining it. Given an interface like:
 
-```markdown webidl
+```html
 <xmp class="idl">
 interface Foo {
   long baz(DOMString arg1);
@@ -325,7 +325,7 @@ interface Foo {
 
 Use markup like:
 
-```markdown webidl
+```html
 <div algorithm="Foo.baz()">
   The <dfn method for=Foo>baz(DOMString arg1)</dfn> [=method steps=] are:
 
@@ -363,9 +363,9 @@ Use markup like:
 
 Within constructor steps, you implicitly have access to `[=this=]`, the instance object being operated on.
 
-## Define Terms
+## Define Other Terms
 
-[Defining a term](https://speced.github.io/bikeshed/#definitions) for a type or object is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  You can reference a definition by its name with `[=name=]`, or you can specify a different display name with `[=name|display name=]`.  Here is an example of a simple definition and a couple different references to it.
+[Defining a term](https://speced.github.io/bikeshed/#definitions), such as for a type, object, constant, concept, or a top-level entity, is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  You can reference a definition by its name with `[=name=]`, or you can specify a different display name with `[=name|display name=]`.  Here is an example of a simple definition and a couple different references to it.
 
 ```markdown
 The user agent has a <dfn>really useful object</dfn> that ...
@@ -376,10 +376,12 @@ The user agent has a <dfn>really useful object</dfn> that ...
 ```
 
 
-## Examples of Different kinds of Specifications
+## Examples of Different Kinds of Specifications
 
+* If you are writing a brand new spec,
 * If you are monkey patching an existing specifications, ...
-* ...
+* Different kinds of things:
+  * HTML element, http header, css selectors, descriptors, JS API,
 
 
 
