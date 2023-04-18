@@ -341,7 +341,7 @@ Within method steps, you implicitly have access to `[=this=]`, the object being 
 
 If you don't define a constructor for a class, one gets created automatically for you that just throws. If you actually want your object to be constructable, it's very similar to methods. Given IDL like:
 
-```markdown webidl
+```html
 <xmp class="idl">
 interface Foo {
   constructor(DOMString arg1);
@@ -351,7 +351,7 @@ interface Foo {
 
 Use markup like:
 
-```markdown webidl
+```html
 <div algorithm="Foo()">
   The <dfn constructor for=Foo lt="Foo(arg1)">new Foo(DOMString arg1)</dfn> [=constructor steps=] are:
 
@@ -378,11 +378,13 @@ The user agent has a <dfn>really useful object</dfn> that ...
 
 ## Examples of Different Kinds of Specifications
 
-* If you are writing a brand new spec,
+* If you are writing a brand new spec, ...
 * If you are monkey patching an existing specifications, ...
-* Different kinds of things:
-  * HTML element, http header, css selectors, descriptors, JS API,
-
+* Standards for Different kinds of entities:
+  * HTTP header,
+  * HTML element,
+  * CSS,
+  * JS API,
 
 
 # Related Resources
