@@ -3,22 +3,21 @@
 - [Introduction to Writing Specifications with Bikeshed](#introduction-to-writing-specifications-with-bikeshed)
   - [Meta](#meta)
   - [Overview](#overview)
-  - [Installing and Running Bikeshed](#installing-and-running-bikeshed)
+  - [Installing Bikeshed, Running and Publishing](#installing-bikeshed-running-and-publishing)
     - [Create a Specification Source](#create-a-specification-source)
-    - [Running Bikeshed Locally](#running-bikeshed-locally)
-  - [Using GitHub](#using-github)
-  - [Specification Document Structure](#specification-document-structure)
+    - [Run Bikeshed Locally](#run-bikeshed-locally)
+    - [Publish with GitHub](#publish-with-github)
   - [Specification Languages](#specification-languages)
     - [Bikeshed Markdown to HTML](#bikeshed-markdown-to-html)
     - [JavaScript to Web IDL (with Infra) to JavaScript](#javascript-to-web-idl-with-infra-to-javascript)
   - [A Strategy for incremental development](#a-strategy-for-incremental-development)
-  - [Add WebIDL](#add-webidl)
-  - [Describe WebIDL](#describe-webidl)
-  - [Add Algorithms](#add-algorithms)
-  - [Define Attributes](#define-attributes)
-  - [Define Methods](#define-methods)
-  - [Define Constructors](#define-constructors)
-  - [Define Other Terms](#define-other-terms)
+    - [Add WebIDL](#add-webidl)
+    - [Describe WebIDL](#describe-webidl)
+    - [Add Algorithms](#add-algorithms)
+    - [Define Attributes](#define-attributes)
+    - [Define Methods](#define-methods)
+    - [Define Constructors](#define-constructors)
+    - [Define Other Terms](#define-other-terms)
   - [Examples of Different Kinds of Specifications](#examples-of-different-kinds-of-specifications)
 - [Related Resources](#related-resources)
   - [Initial setup](#initial-setup)
@@ -35,9 +34,9 @@
 
 ## Overview
 
-This document is intended as a simple introduction to writing specifications of web APIs using Bikeshed.  Very extensive [Bikeshed Documentation](https://tabatkins.github.io/bikeshed/) is available, but it is a complex tool which is a challenge to get started using since there is a lot to learn before one can become productive.
+As the [Bikeshed Documentation](https://tabatkins.github.io/bikeshed/) says: "Bikeshed is a spec-generating tool that takes in lightly-decorated Markdown and spits out a full spec, with cross-spec autolinking, automatic generation of indexes/ToC/etc, and many other features."
 
-As the Bikeshed documentation says: "Bikeshed is a spec-generating tool that takes in lightly-decorated Markdown and spits out a full spec, with cross-spec autolinking, automatic generation of indexes/ToC/etc, and many other features."
+This document is intended as a simple introduction to writing specifications of web APIs using Bikeshed.  Very extensive documentation of Bikeshed is available, but it is a complex tool and there is a lot to learn before one can become productive.
 
 So the goal here is to help beginners get started using Bikeshed in the simplest way possible. And then we provide some guidance for starting to write the first few revisions of a specification.  We only cover the basics for many topics and refer to other documents for more complete details.  The following topics are covered here:
 
@@ -46,7 +45,7 @@ So the goal here is to help beginners get started using Bikeshed in the simplest
 - [Strategies for incremental development](#strategies-for-incremental-development) of your specification
 
 
-## Installing and Running Bikeshed
+## Installing Bikeshed, Running and Publishing
 
 The [Bikeshed Documentation: Installation](https://tabatkins.github.io/bikeshed/#installing) provides details on  several different ways for how to install and run Bikeshed.  We recommend you install it on a local machine so you can run it multiple times as you make changes to the specification.
 
@@ -83,13 +82,43 @@ Introduction here.
 
 ```
 
-### Running Bikeshed Locally
+### Run Bikeshed Locally
 
 You can run Bikeshed locally on your spec with `bikeshed spec index.bs` to generate `index.html`.
 
+The `index.bs` template will contain only a `"metadata"` section and an Introduction, but when you run `bikeshed spec index.html`, the `index.html` file will include the following sections (plus  two added sections which are required in all specifications).
 (Link to bikeshed-examples/template.html)
 
-## Using GitHub
+- **Title**:
+  - Metadata details about this document:
+    - **This version**: Tte URL you provide in metadata.
+    - **Editor**: The name and links you provide in metadata.
+    - **copywright**: Generated for you.
+
+- **Abstract**: From the metadata.
+
+- **Status of this document**: From the metadata.
+
+- **Table of Contents**: Generated automatically from sections.
+
+- **Introduction**: This section provides an overview of the purpose and scope of the standard.
+
+- **Security considerations**: _Add this section_, which describes security issues related to the standard and provides guidance on how to mitigate them.
+
+- **Privacy considerations**: _Add this section_, which describes privacy issues related to the standard and provides guidance on how to address them.
+
+- **Conformance**: This section describes how to conform to the standard and specifies the requirements for conformance.
+
+  - **Document conventions**: Generated content.
+
+  - **Conformant Algorithms**: Generated content.
+
+- **References**:
+
+  - **Normative References**: This section lists the other standards and specifications that are referenced within the document and are required for implementation of the standard.
+
+
+### Publish with GitHub
 
 Assuming you will be using GitHub to develop and provide public access to your specification, you should first decide whether you will use an existing repo or create a new repo to serve as the "publishing source" repo for your specification. You'll need to be an admin for this source repo.
 
@@ -133,43 +162,7 @@ jobs:
 - If your repo is `github.com/owner/repo-name`, then your html file will be at `owner.github.io/repo-name/index.html`.
 
 - Optional Configurations
-  - Maybe turn on [GitHub Apps - PR Preview](https://github.com/apps/pr-preview) for any repo that are not of one of the blanket-installed orgs listed there.  If you used the `npx` command above, the configuration file will be installed for you.
-
-## Specification Document Structure
-
-
-The `index.bs` template generated above will contain only a `"metadata"` section and an Introduction, but when you run `bikeshed spec index.html`, the
-`index.html` file will include the following sections (plus  two added sections which are required in all specifications).
-
-- **Title**:
-  - More details about this document:
-    - **This version**: the URL you provide in metadata
-    - **Editor**: the name and links you provide in metadata
-    - **copywright** generated
-
-- **Abstract**: From the metadata.
-
-- **Status of this document**: From the metadata.
-
-- **Table of Contents**: Generated automatically from sections.
-
-- **Introduction**: This section provides an overview of the purpose and scope of the standard.
-
-- **Security considerations**: _Add this section_, which describes security issues related to the standard and provides guidance on how to mitigate them.
-
-- **Privacy considerations**: _Add this section_, which describes privacy issues related to the standard and provides guidance on how to address them.
-
-- **Conformance**: This section describes how to conform to the standard and specifies the requirements for conformance.
-
-  - **Document conventions**: Generated content.
-
-  - **Conformant Algorithms**: Generated content.
-
-- **References**:
-
-  - **Normative References**: This section lists the other standards and specifications that are referenced within the document and are required for implementation of the standard.
-
-
+  - Maybe turn on [GitHub Apps - PR Preview](https://github.com/apps/pr-preview) for any repo that is not of one of the blanket-installed orgs listed there.  If you used the `npx` command above, the configuration file will be installed for you.
 
 ## Specification Languages
 
@@ -228,7 +221,7 @@ Once you have created an initial spec document, it might be easiest to follow th
 3. Describe WebIDL
 4. Add Algorithms
 
-## Add WebIDL
+### Add WebIDL
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
 
@@ -244,11 +237,12 @@ interface Foo {
 </xmp>
 ```
 
-## Describe WebIDL
+### Describe WebIDL
 
 Immediately before or after each WebIDL block, it is important to include a short, non-normative description, or **`"domintro"`** for each property defined. These descriptive blocks are especially important for algorithmic specifications which are otherwise difficult to read.
 
-The suggested markup for a domintro block is as follows:
+Here is the suggested markup for a domintro block.
+Below, you can find the CSS for the domintro class.
 
 ```html
 <dl class="domintro">
@@ -258,19 +252,8 @@ The suggested markup for a domintro block is as follows:
 </dl>
 ```
 
-<!-- can't show the rendering yet.
-Which will be rendered like this (using the CSS included below):
 
-<blockquote>
-<dl class="domintro">
-  <dt><code>property</code>
-  <dd>
-    <p>Brief summary of property
-</dl>
-</blockquote>
--->
-
-## Add Algorithms
+### Add Algorithms
 
 Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal state. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.
 
@@ -285,7 +268,7 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 
 Within attributes, method steps, you implicitly have access to `[=this=]`, the object being operated on.
 
-## Define Attributes
+### Define Attributes
 
 Each WebIDL attribute of an object is actually a getter/setter pair. By default these refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms. For example, given:
 
@@ -319,7 +302,7 @@ Within getter steps, you implicitly have access to the instance, `[=this=]`. Wit
 
 Readonly attributes won't have setter steps.
 
-## Define Methods
+### Define Methods
 
 Every method needs an algorithm defining it. Given an interface like:
 
@@ -346,7 +329,7 @@ Use markup like:
 By using the variable markup `|arg1|` in the defining signature, you can refer to the arguments within the method steps using the same notation.
 
 
-## Define Constructors
+### Define Constructors
 
 If you don't define a constructor for a class, one gets created automatically for you that just throws. If you actually want your object to be constructable, it's very similar to methods. Given IDL like:
 
@@ -373,7 +356,7 @@ Within constructor steps, you implicitly have access to `[=this=]`, the instance
 (Bikeshed will make all this slightly easier in the future, see <https://github.com/speced/bikeshed/issues/2525>.)
 
 
-## Define Other Terms
+### Define Other Terms
 
 [Defining a term](https://speced.github.io/bikeshed/#definitions), such as for a type, object, constant, concept, or a top-level entity, is usually as easy as wrapping a `<dfn>` element around it.  Bikeshed can then automatically link from each reference of a defined term to its definition.  You can reference a definition by its name with `[=name=]`, or you can specify a different display name with `[=name|display name=]`.  Here is an example of a simple definition and a couple different references to it.
 
