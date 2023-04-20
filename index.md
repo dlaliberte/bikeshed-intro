@@ -18,6 +18,7 @@
     - [Define Methods](#define-methods)
     - [Define Constructors](#define-constructors)
     - [Define Other Terms](#define-other-terms)
+      - [Autolinking](#autolinking)
   - [Examples of Different Kinds of Specifications](#examples-of-different-kinds-of-specifications)
 - [Related Resources](#related-resources)
   - [Initial setup](#initial-setup)
@@ -89,11 +90,11 @@ You can run Bikeshed locally on your spec with `bikeshed spec index.bs` to gener
 The `index.bs` template will contain only a `"metadata"` section and an Introduction, but when you run `bikeshed spec index.html`, the `index.html` file will include the following sections (plus  two added sections which are required in all specifications).
 (Link to bikeshed-examples/template.html)
 
-- **Title**:
-  - Metadata details about this document:
-    - **This version**: Tte URL you provide in metadata.
-    - **Editor**: The name and links you provide in metadata.
-    - **copywright**: Generated for you.
+- About this specification:
+  - **Title**: From the metadata.
+  - **This version**: The URL you provide in metadata.
+  - **Editor**: The name and links you provide in metadata.
+  - **Copyright**: Generated for you.
 
 - **Abstract**: From the metadata.
 
@@ -168,13 +169,13 @@ jobs:
 
 ### Bikeshed Markdown to HTML
 
-Bikeshed uses a Markdown variant called [Bikeshed-flavored Markdown (BSMD)](https://speced.github.io/bikeshed/#markdown).  By default, it recognizes all of the "block-level" Markdown constructs defined by [CommonMark](https://commonmark.org/), except for indented code blocks.  You can freely switch back and forth between Markdown and HTML as needed, and indent properly.
+Bikeshed uses a Markdown variant called [Bikeshed-flavored Markdown (BSMD)](https://speced.github.io/bikeshed/#markdown).  By default, Bikeshed recognizes all of the "block-level" Markdown constructs defined by [CommonMark](https://commonmark.org/), except for indented code blocks.  You can freely switch back and forth between Markdown and HTML as needed, but you should prefer to use Markdown where it is available.
 
 ### JavaScript to Web IDL (with Infra) to JavaScript
 
-In a browser, JavaScript calls to browser APIs result in...
+In a browser, JavaScript calls to browser APIs result in calls with JavaScript argument values to the browser internals, defined typically in C++, and the results, if any, are returned in JavaScript values.  Rather than use C++ interfaces, web standards specify interfaces in WebIDL.  And to clarify the meaning of an API call, we also specify algorithms in terms of WebIDL and Infra.
 
-WebIDL and Infra are complementary technologies. WebIDL is used to define the interfaces of web APIs, while Infra is used to implement those interfaces.
+WebIDL and Infra are complementary technologies. WebIDL is used to define the interfaces of web APIs, while Infra is used to define parts of the implementation of those interfaces.
 
 <table style="border:0">
 <tr>
@@ -225,7 +226,7 @@ Once you have created an initial spec document, it might be easiest to follow th
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
 
-You will typically define your algorithm steps relative to an interface declared with WebIDL.  Here is an example of an interface that will be used in the following sections.
+You will typically define your algorithm steps relative to an interface declared with WebIDL.  Here is an example of an interface that is used in the following sections.
 
 ```html
 <xmp class="idl">
@@ -241,8 +242,18 @@ interface Foo {
 
 Immediately before or after each WebIDL block, it is important to include a short, non-normative description, or **`"domintro"`** for each property defined. These descriptive blocks are especially important for algorithmic specifications which are otherwise difficult to read.
 
-Here is the suggested markup for a domintro block.
-Below, you can find the CSS for the domintro class.
+Here is the suggested markdown for a domintro block:
+
+
+```html
+<div class="domintro">
+  : property
+  :: Brief summary of property
+</div>
+```
+
+Bikeshed will convert this into the following HTML:
+
 
 ```html
 <dl class="domintro">
@@ -252,6 +263,7 @@ Below, you can find the CSS for the domintro class.
 </dl>
 ```
 
+CSS for the domintro class is defined below, which you should include in your spec.
 
 ### Add Algorithms
 
@@ -266,35 +278,38 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 </div>
 ```
 
-Within attributes, method steps, you implicitly have access to `[=this=]`, the object being operated on.
+Note that the steps are all numbered `1.`, since markdown automatically increments the numbers for you, so you don't have to update numbers manually.
+
+Within attributes and method steps, described next, you implicitly have access to `[=this=]`, the object being operated on.
 
 ### Define Attributes
 
-Each WebIDL attribute of an object is actually a getter/setter pair. By default these refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms. For example, given:
+Each WebIDL attribute of an object is actually a getter/setter pair, unless the `readonly` qualifier is included. By default these refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms. For example, given:
 
 ```html
 <xmp class="idl">
 interface Foo {
-  attribute DOMString bar;
+  readonly attribute DOMString bar1;
+  attribute DOMString bar2;
 };
 </xmp>
 ```
 
-This implies, by default, that `Foo` instances have a `[[bar]]` internal slot, and the `bar` attribute's getter and setter access and modify that slot, respectively. Note that when referencing the attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  Use text like "...`the {{Foo/bar}} internal slot`...".
+This implies, by default, that `Foo` instances have internal slots for `[[bar1]]` and `[[bar2]]`, and the `bar1` and `bar2` attributes both have a getter that accesses the state of the slots.  The `bar2` attribute also has a setter that modifies that slot.
+Note that when referencing the attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  Use text like "...`the {{Foo/bar1}} internal slot`...".
 
-If you're doing something non-trivial, you may need to explicitly define a name like: `<dfn for=Foo>\[[bar]]</dfn>` (since Bikeshed doesn't auto-define the `[[bar]]` slot name for you yet).
-
-If your attribute getter or setter need to do something non-trivial, such as reacting to its state ways that the WebIDL type system does not, you'll need to write a getter/setter algorithm yourself. Use the following markup:
+If your attribute getter or setter need to do something non-trivial, such as reacting to its state in ways that the WebIDL type system does not, you may need to explicitly define a name like: `<dfn for=Foo>[[bar2]]</dfn>` (since Bikeshed doesn't auto-define the `[[bar2]]` slot name for you yet).
+Use the following markup:
 
 ```html
-<div algorithm="Foo.bar">
-  The <dfn attribute for=Foo>bar</dfn> [=getter steps=] are:
+<div algorithm="Foo.bar2">
+  The <dfn attribute for=Foo>bar2</dfn> [=getter steps=] are:
 
-  1. Return [=this=]'s {{Foo/[[internalBar]]}} slot.
+  1. Return [=this=]'s {{Foo/[[internalBar2]]}} slot.
 
-  The {{Foo/bar}} [=setter steps=] are:
+  The {{Foo/bar2}} [=setter steps=] are:
 
-  1. Set [=this=]'s {{Foo/[[internalBar]]}} slot to [=the given value=].
+  1. Set [=this=]'s {{Foo/[[internalBar2]]}} slot to [=the given value=].
 </div>
 ```
 
@@ -321,8 +336,8 @@ Use markup like:
   The <dfn method for=Foo>baz(DOMString |arg1|)</dfn> [=method steps=] are:
 
   1. Do something to |arg1|.
-  2. If [=this's=] {{Foo/bar}} attribute is null, [=throw=] a TypeError.
-  3. Otherwise, return 4.
+  1. If [=this's=] {{Foo/bar}} attribute is null, [=throw=] a TypeError.
+  1. Otherwise, return 4.
 </div>
 ```
 
@@ -368,6 +383,26 @@ The user agent has a <dfn>really useful object</dfn> that ...
 2. If the [=really useful object|RUO=] is not null, then …
 ```
 
+#### Autolinking
+
+There are several convenient ways that Bikeshed will [Autolink](https://speced.github.io/bikeshed/#autolinking) from uses of terms to their definitions.  Here is a table of some of them, from a [Bikeshed Cheat Sheet](https://cheatography.com/apowers313/cheat-sheets/bikeshed/)
+
+
+Notation|Meaning
+--------|-------
+`<df­n>foo­</d­fn>` | A definition for `foo`
+`[=foo=]` | Link to definition of `foo`
+`[[foo]]` | A non-no­rmative reference to the SpecRef entry `foo`
+`[[!foo]]` | A normative reference to the SpecRef entry `foo`
+`[[#foo]]` | A reference to the section in the local document named `foo`
+`[[foo#­bar]]` | A reference to section `bar` of spec `foo`. `*`
+`[[spec/page#id]]` | A reference to section `bar` on page `id` of spec `foo`. `*`
+`[[spec­/page]]` | A reference to section to `page` of spec `foo`. `*`
+`{{foo}}` | A reference to the IDL entry for `foo`
+`'foo'` | Link to a property or descriptor named `foo`
+`## heading {#link­-name}` | Creates a new `<h2>` that is linkable by `#link-name`
+
+`*`  The spec must be part of Bikeshed's autoli­nking database.
 
 ## Examples of Different Kinds of Specifications
 
