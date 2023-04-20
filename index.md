@@ -232,9 +232,15 @@ Once you have created an initial spec document, it might be easiest to follow th
 
 If you have WebIDL specifications for your API code, that is a great place to start.  Simply copy-paste a subset of the WebIDL that corresponds to the public API into an `<xmp class="idl">` tag.  Bikeshed docs recommend using the `<xmp>` tag rather than the `<pre>` tag so that you will not need to HTML-escape `&` and `<` characters.
 
+You will typically define your algorithm steps relative to an interface declared with WebIDL.  Here is an example of an interface that will be used in the following sections.
+
 ```html
 <xmp class="idl">
-  ...your WebIDL here...
+interface Foo {
+    attribute DOMString bar;
+    constructor(DOMString arg1);
+    long baz(DOMString arg1);
+};
 </xmp>
 ```
 
@@ -276,6 +282,8 @@ Once you have some WebIDL declarations of functions and types of parameters, the
   1. step-3
 </div>
 ```
+
+Within attributes, method steps, you implicitly have access to `[=this=]`, the object being operated on.
 
 ## Define Attributes
 
@@ -327,7 +335,7 @@ Use markup like:
 
 ```html
 <div algorithm="Foo.baz()">
-  The <dfn method for=Foo>baz(DOMString arg1)</dfn> [=method steps=] are:
+  The <dfn method for=Foo>baz(DOMString |arg1|)</dfn> [=method steps=] are:
 
   1. Do something to |arg1|.
   2. If [=this's=] {{Foo/bar}} attribute is null, [=throw=] a TypeError.
@@ -335,7 +343,8 @@ Use markup like:
 </div>
 ```
 
-Within method steps, you implicitly have access to `[=this=]`, the object being operated on.
+By using the variable markup `|arg1|` in the defining signature, you can refer to the arguments within the method steps using the same notation.
+
 
 ## Define Constructors
 
@@ -353,15 +362,16 @@ Use markup like:
 
 ```html
 <div algorithm="Foo()">
-  The <dfn constructor for=Foo lt="Foo(arg1)">new Foo(DOMString arg1)</dfn> [=constructor steps=] are:
+  The <dfn constructor for=Foo lt="Foo(arg1)">new Foo(DOMString |arg1|)</dfn> [=constructor steps=] are:
 
   ...
 </div>
 ```
 
-(Bikeshed will make this slightly easier in the future, see <https://github.com/speced/bikeshed/issues/2525>.)
-
 Within constructor steps, you implicitly have access to `[=this=]`, the instance object being operated on.
+
+(Bikeshed will make all this slightly easier in the future, see <https://github.com/speced/bikeshed/issues/2525>.)
+
 
 ## Define Other Terms
 
