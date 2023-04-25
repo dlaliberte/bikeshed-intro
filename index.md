@@ -15,6 +15,7 @@
     - [Describe WebIDL](#describe-webidl)
     - [Add Algorithms](#add-algorithms)
     - [Define Attributes](#define-attributes)
+    - [Exported versus Private Attributes](#exported-versus-private-attributes)
     - [Define Methods](#define-methods)
     - [Define Constructors](#define-constructors)
     - [Define Other Terms](#define-other-terms)
@@ -284,11 +285,14 @@ Once you have some WebIDL declarations of functions and types of parameters, the
 
 Note that the steps are all numbered `1.`, since markdown automatically increments the numbers for you, so you don't have to update numbers manually.
 
-Within attributes and method steps, described next, you implicitly have access to `[=this=]`, the object being operated on.
+Within method steps, described below, you implicitly have access to `[=this=]`, the object being operated on.
 
 ### Define Attributes
 
-Each WebIDL attribute of an object is actually a getter/setter pair, unless the `readonly` qualifier is included. By default these refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms. For example, given:
+WebIDL definitions typically define one or more attributes that are associated with an instance object.
+By default these attributes refer to some internal state of the object, not directly observable by author-facing JS, but may be referenced by other spec algorithms.
+
+For example, given this WebIDL:
 
 ```html
 <xmp class="idl">
@@ -299,20 +303,23 @@ interface Foo {
 </xmp>
 ```
 
-This implies, by default, that `Foo` instances have internal slots for `[[bar1]]` and `[[bar2]]`, and the `bar1` and `bar2` attributes both have a getter that accesses the state of the slots.
+(TODO: resolve what to say about internal slots.
 
-But current best practice is that instead of referring to internal slots, you should use language like this: "`Foo` has an associated `bar1` of type `DOMString`".
+This implies that `Foo` instances have internal slots for `[[bar1]]` and `[[bar2]]`.
 
-All definitions (except `dfn` definitions, by default) are automatically ["**exported**"](https://speced.github.io/bikeshed/#dfn-export), which means they're made available for other specs to autolink to.
+When referencing an attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  Use text like "...`the {{Foo/bar1}} internal slot`...".
 
-If a definition is not exported, you can still link to it with e.g. "`<a spec: something>...</a>`".
+But current best practice is that instead of referring to internal slots, you should use language like this: "`Foo` has an associated `bar1` of type `DOMString`". )
 
-The `bar2` attribute above also has a setter that modifies that slot.
+The `bar1` attribute is `readonly` which means it only has a getter algorithm that could be defined like this:
 
-Note that when referencing the attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  Use text like "...`the {{Foo/bar1}} internal slot`...".
+```html
+<div algorithm="Foo.bar1">
+  The <dfn attribute for=Foo>bar1</dfn> [=getter steps=] are: ...
+</div>
+```
 
-If your attribute getter or setter needs to do something non-trivial, such as reacting to its state in ways that the WebIDL type system does not, you may need to explicitly define a name like: `<dfn for=Foo>[[bar2]]</dfn>` (since Bikeshed doesn't auto-define the `[[bar2]]` slot name for you yet).
-Use the following markup:
+The `bar2` attribute is `read/write` so it also has a setter.  Use something like the following markup to define the setter:
 
 ```html
 <div algorithm="Foo.bar2">
@@ -326,8 +333,15 @@ Use the following markup:
 </div>
 ```
 
+Note that within getter and setter algorithm steps, you implicitly have access to the instance, `[=this=]`.  Within setter steps for `read/write` attributes, you also have access to `[=the given value=]`, which is the value that the attribute is being set to.
 
-Within getter steps, you implicitly have access to the instance, `[=this=]`.  Readonly attributes won't have setter steps, but within setter steps for `read/write` attributes, you also have access to `[=the given value=]`, which is the value that the attribute is being set to.
+If your attribute getter or setter needs to do something non-trivial, such as reacting to its state in ways that the WebIDL type system does not, you may need to explicitly define a name like: `<dfn for=Foo>[[bar2]]</dfn>` (since Bikeshed doesn't auto-define the `[[bar2]]` slot name for you yet).
+
+### Exported versus Private Attributes
+
+All definitions (except `dfn` definitions, by default) are automatically "[**exported**](https://speced.github.io/bikeshed/#dfn-export)", which means other specs can autolink to them.
+
+If a definition is not exported, it is considered private, but you can still link to it with e.g. "`<a spec: something>...</a>`".
 
 ### Define Methods
 
