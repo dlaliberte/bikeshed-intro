@@ -32,7 +32,7 @@
 
 - This document: [Introduction to Writing Specifications with Bikeshed](https://dlaliberte.github.io/bikeshed-intro/index.html)
 - Source: [bikeshed-intro/index.md at updates · dlaliberte/bikeshed-intro](http://go/gh/dlaliberte/bikeshed-intro/blob/updates/index.md)
-- Issues: [Issues · dlaliberte/bikeshed-intro](http://go/gh/dlaliberte/bikeshed-intro/issues)
+- Issues: [dlaliberte/bikeshed-intro/issues](http://go/gh/dlaliberte/bikeshed-intro/issues)
 
 ## Overview
 
@@ -86,9 +86,7 @@ Introduction here.
 
 ### Run Bikeshed Locally
 
-You can run Bikeshed locally on your spec with `bikeshed spec index.bs` to generate `index.html`.
-
-The `index.bs` template will contain only a `"metadata"` section and an Introduction, but when you run `bikeshed spec index.bs`, the `index.html` file will include the following sections (plus  two added sections which are required in all specifications).
+The `index.bs` template created above will contain only a `"metadata"` section and an Introduction, but when you run `bikeshed spec index.bs`, the generated `index.html` file will include the following sections (plus two added sections which are required in all specifications).
 (Link to bikeshed-examples/template.html)
 
 - About this specification:
@@ -157,6 +155,7 @@ jobs:
         GH_PAGES_BRANCH: gh-pages
         BUILD_FAIL_ON: warning
 ```
+
 - Change permissions to allow `github-actions[bot]` under Settings > Actions > General > Workflow permissions.  The default is "Read repository contents and packages permission", so change that to: "Read and write permissions".  Remember to click "Save".
 
 - Optional Configurations
@@ -426,7 +425,7 @@ Link Notation|Meaning
 `[[!foo]]` | A normative reference to the SpecRef entry `foo`
 `[[#foo]]` | A reference to the section in the local document named `foo`
 `[[foo#­bar]]` | A reference to section `bar` of spec `foo`. The spec must be part of Bikeshed's autoli­nking database.
-`'foo'` | Link to a property or descriptor named `foo`
+`'foo'` | Link to a CSS property or descriptor named `foo`
 
 
 
