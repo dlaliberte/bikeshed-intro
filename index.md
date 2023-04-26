@@ -15,7 +15,7 @@
     - [Describe WebIDL](#describe-webidl)
     - [Add Algorithms](#add-algorithms)
     - [Define Attributes](#define-attributes)
-    - [Exported versus Private Attributes](#exported-versus-private-attributes)
+      - [Exported versus Private Attributes](#exported-versus-private-attributes)
     - [Define Methods](#define-methods)
     - [Define Constructors](#define-constructors)
     - [Define Other Terms](#define-other-terms)
@@ -224,7 +224,7 @@ Once you have created an initial spec document, it might be easiest to follow th
 1. Start with the template generated above, or copy a spec that is similar. See the example specs listed below.
 2. Add WebIDL for each function.
 3. Describe each WebIDL block with prose text.
-4. Add Algorithms for each function.
+4. Add algorithms for each function.
 
 ### Add WebIDL
 
@@ -246,8 +246,7 @@ interface Foo {
 
 Immediately before or after each WebIDL block, it is important to include a short, non-normative description, or **`"domintro"`** for each property defined. These descriptive blocks are especially important for algorithmic specifications which are otherwise difficult to read.
 
-Here is the suggested markdown for a `domintro` block:
-
+Here is the suggested markdown for a `domintro` block, which Bikeshed will convert into an HTML definition list:
 
 ```html
 <div class="domintro">
@@ -256,36 +255,23 @@ Here is the suggested markdown for a `domintro` block:
 </div>
 ```
 
-Bikeshed will convert this into the following definition list in HTML:
-
-
-```html
-<dl class="domintro">
-  <dt><code>property</code>
-  <dd>
-    <p>Brief summary of property
-</dl>
-```
-
 CSS for the `domintro` class is defined below, which you should include in your spec.
 
 ### Add Algorithms
 
-Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal state. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.
+Once you have some WebIDL declarations of functions and types of parameters, then you can define an **algorithm** for each function in terms of Web IDL along with Infra declarations for internal state. Use a `<div class="algorithm">` container for your algorithm steps, so Bikeshed can add nice default styling to make the algorithms easier to read.  For example:
 
 ```html
-<div algorithm="my-algorithm">
-  ...your algorithm steps here...
+<div algorithm="Foo-algorithm">
+  Attribute definitions, if any...
+  The algorithm steps are:
   1. step-1
   1. step-2
   1. step-3
 </div>
 ```
 
-Note that the steps are all numbered `1.`, since markdown automatically increments the numbers for you, so you don't have to update numbers manually.
-
-Within method steps, described below, you implicitly have access to `[=this=]`, the object being operated on.
-
+Note that the steps are all numbered `1.`, since markdown automatically increments the numbers for you, so you won't have to update numbers manually.
 ### Define Attributes
 
 WebIDL definitions typically define one or more attributes that are associated with an instance object.
@@ -302,13 +288,11 @@ interface Foo {
 </xmp>
 ```
 
-(TODO: resolve what to say about internal slots.
+[TODO: resolve what to say about "internal slots".]
 
-This implies that `Foo` instances have internal slots for `[[bar1]]` and `[[bar2]]`.
+This WebIDL implies that `Foo` instances have internal slots for `[[bar1]]` and `[[bar2]]`.
 
-When referencing an attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  Use text like "...`the {{Foo/bar1}} internal slot`...".
-
-But current best practice is that instead of referring to internal slots, you should use language like this: "`Foo` has an associated `bar1` of type `DOMString`". )
+When referencing an attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  You can use text like "...`the {{Foo/bar1}} internal slot`...". But current best practice is that instead of referring to internal slots, you should use language like this: "`Foo` has an associated `bar1` of type `DOMString`".
 
 The `bar1` attribute is `readonly` which means it only has a getter algorithm that could be defined like this:
 
@@ -318,7 +302,7 @@ The `bar1` attribute is `readonly` which means it only has a getter algorithm th
 </div>
 ```
 
-The `bar2` attribute is `read/write` so it also has a setter.  Use something like the following markup to define the setter:
+The `bar2` attribute is `read/write` so it has both a getter and a setter.  Use something like the following markup to define these algorithms:
 
 ```html
 <div algorithm="Foo.bar2">
@@ -336,7 +320,7 @@ Note that within getter and setter algorithm steps, you implicitly have access t
 
 If your attribute getter or setter needs to do something non-trivial, such as reacting to its state in ways that the WebIDL type system does not, you may need to explicitly define a name like: `<dfn for=Foo>[[bar2]]</dfn>` (since Bikeshed doesn't auto-define the `[[bar2]]` slot name for you yet).
 
-### Exported versus Private Attributes
+#### Exported versus Private Attributes
 
 All definitions (except `dfn` definitions, by default) are automatically "[**exported**](https://speced.github.io/bikeshed/#dfn-export)", which means other specs can autolink to them.
 
@@ -366,8 +350,9 @@ Use markup like:
 </div>
 ```
 
-By using the variable markup `|arg1|` in the defining signature, you can refer to the arguments within the method steps using the same notation.
+By using the variable markup `|arg1|` for an argument in the defining signature, you can refer to the argument within the method steps using the same notation, as shown in step 1 above.
 
+Within all method algorithm steps, you implicitly have access to `[=this=]`, the instance object being operated on.
 
 ### Define Constructors
 
@@ -386,12 +371,9 @@ Use markup like:
 ```html
 <div algorithm="Foo()">
   The <dfn constructor for=Foo lt="Foo(arg1)">new Foo(DOMString |arg1|)</dfn> [=constructor steps=] are:
-
   ...
 </div>
 ```
-
-Within constructor steps, you implicitly have access to `[=this=]`, the instance object being operated on.
 
 (Bikeshed will make all this slightly easier in the future, see <https://github.com/speced/bikeshed/issues/2525>.)
 
@@ -410,7 +392,7 @@ The user agent has a <dfn>really useful object</dfn> that ...
 
 #### Autolinking
 
-There are several convenient ways that Bikeshed will [Autolink](https://speced.github.io/bikeshed/#autolinking) from uses of terms to their definitions.  Here is a table of some of them, from a [Bikeshed Cheat Sheet](https://cheatography.com/apowers313/cheat-sheets/bikeshed/)
+There are several convenient ways that Bikeshed will [Autolink](https://speced.github.io/bikeshed/#autolinking) from use of a term to its definition.  Here is a table of some of them (derived from a [Bikeshed Cheat Sheet](https://cheatography.com/apowers313/cheat-sheets/bikeshed/))
 
 Definition Notation|Meaning
 --------------|--------
@@ -426,7 +408,6 @@ Link Notation|Meaning
 `[[#foo]]` | A reference to the section in the local document named `foo`
 `[[foo#­bar]]` | A reference to section `bar` of spec `foo`. The spec must be part of Bikeshed's autoli­nking database.
 `'foo'` | Link to a CSS property or descriptor named `foo`
-
 
 
 ## Examples of Different Kinds of Specifications
