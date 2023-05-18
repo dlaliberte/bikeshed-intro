@@ -430,7 +430,10 @@ Link Notation|Meaning
 
 ## Examples of Different Kinds of Specifications
 
+* [Bikeshed spec template](https://dlaliberte.github.io/bikeshed-intro-examples/index.html) - using the default template.
 * If you are writing a brand new spec, ...
+  * [Common Sections of Specifications](https://dlaliberte.github.io/bikeshed-intro-examples/sections.html)
+  * [Example of a Widget Specification](https://dlaliberte.github.io/bikeshed-intro-examples/widgets.html)
 * If you are monkey patching an existing specifications, ...
 * Standards for Different kinds of entities:
   * HTTP header,
