@@ -3,8 +3,11 @@
 - [Introduction to Writing Specifications with Bikeshed](#introduction-to-writing-specifications-with-bikeshed)
   - [Meta](#meta)
   - [Overview](#overview)
+  - [Create a Repo](#create-a-repo)
+  - [Install Node.js and Git](#install-nodejs-and-git)
+  - [Create Initial Repo Files](#create-initial-repo-files)
+    - [Your Specification Source](#your-specification-source)
   - [Installing Bikeshed, Running and Publishing](#installing-bikeshed-running-and-publishing)
-    - [Create a Specification Source](#create-a-specification-source)
     - [Run Bikeshed Locally](#run-bikeshed-locally)
     - [Publish with GitHub](#publish-with-github)
   - [Specification Languages](#specification-languages)
@@ -46,24 +49,43 @@ So the goal here is to help beginners get started using Bikeshed in the simplest
    - [Publish with GitHub](#publish-with-github)
  - [A Strategy for Incremental Development](#a-strategy-for-incremental-development) of your specification
 
+## Create a Repo
 
-## Installing Bikeshed, Running and Publishing
+You can create a repository for your specification in a variety of ways.  This guide will start with having you create a directory in your local work environment and set up the required tools.  In a shell window, do the following, replacing "widgets" with the name of your spec:
 
-The [Bikeshed Documentation: Installation](https://tabatkins.github.io/bikeshed/#installing) provides details on  several different ways for how to install and run Bikeshed.  We recommend you install it on a local machine so you can run it multiple times as you make changes to the specification.
+```bash
+mkdir widgets
+cd widgets
+```
 
-- Make sure you have Python 3.7 or later.
-- Install Bikeshed with pip3, if you can.
-  - `pip3 install bikeshed`
-  - `bikeshed update`
-- Alternatively, you can use pip or pipenv, but see details at: [Bikeshed Documentation - Installing Bikeshed Itself](https://tabatkins.github.io/bikeshed/#install-final)
-- You don't need to install "Bikeshed for Development", unless you are planning to do development on Bikeshed itself.
+## Install Node.js and Git
+
+If it is not already available on your development platform, [Download and install Node.js](https://nodejs.org/en/download).    Node will also be used to help setup your development environment and can be used to run visual tests. This will also install the `npx` command which will be used next to create the initial repository files.
+
+(Install git)
 
 
-### Create a Specification Source
+## Create Initial Repo Files
 
-You will create a specification source file to define the interface of an API.  You can easily create an initial "empty" specification file as your source, e.g. `index.bs`, as described here.
+To easily create and initialize a new repository with content, first create a new directory (e.g. `my-awesome-api`) and `cd` into it. Then run the following:
 
- You can copy this [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs), or you can run `bikeshed template > index.bs` to generate the same template, copied here:
+```bash
+npx wicg init "My Awesome API"
+```
+
+This command will ask you for meta-level details about your specification, which you can change later.  You should select 'bikeshed' as the spec preprocesor so that it will generate an `index.bs` file, and it will also create the following files as the initial content for your :
+
+- `CONTRIBUTING.md`
+- `index.bs` -
+- `LICENSE.md`
+- `.pr-preview.json`
+- `README.md` - an explainer for your spec
+
+
+### Your Specification Source
+
+The above `npx` command created an initial `index.bs`
+file. Alternatively, you can copy this [Minimal template](http://go/gh/WICG/starter-kit/blob/main/templates/index.bs), or you can run `bikeshed template > index.bs` to generate the same template.  Here is what the bikeshed generated template looks like:
 
 ```markdown
 <pre class='metadata'>
@@ -84,10 +106,24 @@ Introduction here.
 
 ```
 
+## Installing Bikeshed, Running and Publishing
+
+The [Bikeshed Documentation: Installation](https://tabatkins.github.io/bikeshed/#installing) provides details on  several different ways for how to install and run Bikeshed.  We recommend you install it on a local machine so you can run it multiple times as you make changes to the specification.
+
+- Make sure you have Python 3.7 or later.
+- Install Bikeshed with pip3, if you can.
+  - `pip3 install bikeshed`
+  - `bikeshed update`
+- Alternatively, you can use pip or pipenv, but see details at: [Bikeshed Documentation - Installing Bikeshed Itself](https://tabatkins.github.io/bikeshed/#install-final)
+- You don't need to install "Bikeshed for Development", unless you are planning to do development on Bikeshed itself.
+
+
 ### Run Bikeshed Locally
 
 The `index.bs` template created above will contain only a `"metadata"` section and an Introduction, but when you run `bikeshed spec index.bs`, the generated `index.html` file will include the following sections (plus two added sections which are required in all specifications).
-(Link to bikeshed-examples/template.html)
+
+You can see what this looks like an an html page at  [Bikeshed spec template](https://dlaliberte.github.io/bikeshed-intro-examples/index.html) - using the default template.
+
 
 - About this specification:
   - **Title**: From the metadata.
@@ -122,15 +158,6 @@ The `index.bs` template created above will contain only a `"metadata"` section a
 
 Assuming you will be using GitHub to develop and provide public access to your specification, you should first decide whether you will use an existing repo or create a new repo to serve as the "publishing source" repo for your specification. You'll need to be an admin for this source repo.
 
-To easily create and initialize a new repository with content, first create a new directory (e.g. `my-awesome-api`) and `cd` into it. Then run `npx wicg init "My Awesome API"`, which will ask you for meta-level details about your specification.  You should select 'bikeshed' as the spec preprocesor.  This command will then create a new `git` repository in that directory containing the following files:
-
-- `CONTRIBUTING.md`
-- `index.bs` -
-- `LICENSE.md`
-- `.pr-preview.json`
-- `README.md` - an explainer for your spec
-
-(Push this up to github now..)
 
 It is also convenient to set up a "GitHub Pages site" and actions which will automatically publish and serve the html file that is generated by Bikeshed after each change of your source file. To do that, make the following changes.
 
