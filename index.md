@@ -62,7 +62,12 @@ cd widgets
 
 If it is not already available on your development platform, [Download and install Node.js](https://nodejs.org/en/download).    Node will also be used to help setup your development environment and can be used to run visual tests. This will also install the `npx` command which will be used next to create the initial repository files.
 
-(Install git)
+Maybe run `npm init` which will prompt you to provide some information about your project, such as the project name, version, description, entry point, etc.  Then it will create a `package.json` file.
+* Install pnpm: `npm install pnpm`
+* Install `vnu-jar`: `pnpm add vnu-jar`
+* Add ...
+
+You should also install git, if it is not already available.
 
 
 ## Create Initial Repo Files
@@ -229,6 +234,8 @@ WebIDL and Infra are complementary technologies. WebIDL is used to define the in
 <table style="border:0">
 <tr>
 <td style="border:0">
+
+[spec languages](https://screenshot.googleplex.com/3gRRYZzUBbJEj6N.png)
 
 ```mermaid
 graph TD;
@@ -463,9 +470,9 @@ Link Notation|Meaning
   * [Example of a Widget Specification](https://dlaliberte.github.io/bikeshed-intro-examples/widgets.html)
 * If you are monkey patching an existing specifications, ...
 * Standards for Different kinds of entities:
+  * CSS:
   * HTTP header,
   * HTML element,
-  * CSS,
   * JS API,
 
 
