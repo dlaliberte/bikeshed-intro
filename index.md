@@ -237,22 +237,6 @@ WebIDL and Infra are complementary technologies. WebIDL is used to define the in
 
 <img src="https://screenshot.googleplex.com/3gRRYZzUBbJEj6N.png" alt="spec languages"/>
 
-```mermaid
-graph TD;
-    A[JavaScript params] --> |JS -> Web IDL| B;
-    subgraph .
-     B[Web IDL params] --> C;
-      C[[Spec Algorithms\n Using Web IDL and Infra]]-->D;
-     end
-     D[Web IDL result] --> |Web IDL -> JS| E;
-    E[JavaScript result];
-    classDef JavaScript fill:#F76602,color:#231F20
-    class A,E JavaScript
-    classDef CppAlgorithms fill:white,color:black
-    class C CppAlgorithms
-    classDef Cpp fill:#24599C
-    class B,D Cpp
-```
 
 </td>
 <td style="border: 0; align:top">
