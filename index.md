@@ -235,7 +235,7 @@ WebIDL and Infra are complementary technologies. WebIDL is used to define the in
 <tr>
 <td style="border:0">
 
-[spec languages](https://screenshot.googleplex.com/3gRRYZzUBbJEj6N.png)
+<img src="https://screenshot.googleplex.com/3gRRYZzUBbJEj6N.png" alt="spec languages"/>
 
 ```mermaid
 graph TD;
