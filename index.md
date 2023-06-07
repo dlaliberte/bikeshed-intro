@@ -65,7 +65,6 @@ If it is not already available on your development platform, [Download and insta
 Maybe run `npm init` which will prompt you to provide some information about your project, such as the project name, version, description, entry point, etc.  Then it will create a `package.json` file.
 * Install pnpm: `npm install pnpm`
 * Install `vnu-jar`: `pnpm add vnu-jar`
-* Add ...
 
 You should also install git, if it is not already available.
 
@@ -449,14 +448,11 @@ Link Notation|Meaning
 ## Examples of Different Kinds of Specifications
 
 * [Bikeshed spec template](https://dlaliberte.github.io/bikeshed-intro-examples/index.html) - using the default template.
-* If you are writing a brand new spec, ...
-  * [Common Sections of Specifications](https://dlaliberte.github.io/bikeshed-intro-examples/sections.html)
-* If you are monkey patching an existing specifications, ...
+* [Common Sections of Specifications](https://dlaliberte.github.io/bikeshed-intro-examples/sections.html)
 * Standards for Different kinds of entities (TBD):
-  * [Box Model Spec](https://dlaliberte.github.io/bikeshed-intro-examples/box-model.html)
-  * HTTP header,
-  * JS API,
-
+  * CSS: [Box Model Spec](https://dlaliberte.github.io/bikeshed-intro-examples/box-model.html)
+  * JS API: [Example of a Widget Specification](https://dlaliberte.github.io/bikeshed-intro-examples/widgets.html)
+  * HTTP header
 
 # Related Resources
 
