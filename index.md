@@ -327,7 +327,7 @@ interface Foo {
 
 This WebIDL implies that `Foo` instances have internal slots for `[[bar1]]` and `[[bar2]]`.
 
-When referencing an attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  You can use text like "...`the {{Foo/bar1}} internal slot`...". But current best practice is that instead of referring to internal slots, you should use language like this: "`Foo` has an associated `bar1` of type `DOMString`".
+When referencing an attribute in spec algorithms, you **must** refer to the internal slot, not the author-facing property, as those can be observed/intercepted by author code.  You can use text like "...`the {% raw %}{{Foo/bar1}}{% endraw %} internal slot`...". But current best practice is that instead of referring to internal slots, you should use language like this: "`Foo` has an associated `bar1` of type `DOMString`".
 
 The `bar1` attribute is `readonly` which means it only has a getter algorithm that could be defined like this:
 
@@ -343,11 +343,11 @@ The `bar2` attribute is `read/write` so it has both a getter and a setter.  Use 
 <div algorithm="Foo.bar2">
   The <dfn attribute for=Foo>bar2</dfn> [=getter steps=] are:
 
-  1. Return [=this=]'s {{Foo/[[internalBar2]]}} slot.
+  1. Return [=this=]'s {% raw %}{{Foo/[[internalBar2]]}}{% endraw %} slot.
 
-  The {{Foo/bar2}} [=setter steps=] are:
+  The {% raw %}{{Foo/bar2}}{% endraw %} [=setter steps=] are:
 
-  1. Set [=this=]'s {{Foo/[[internalBar2]]}} slot to [=the given value=].
+  1. Set [=this=]'s {% raw %}{{Foo/[[internalBar2]]}}{% endraw %} slot to [=the given value=].
 </div>
 ```
 
@@ -380,7 +380,7 @@ Use markup like:
   The <dfn method for=Foo>baz(DOMString |arg1|)</dfn> [=method steps=] are:
 
   1. Do something to |arg1|.
-  1. If [=this's=] {{Foo/bar}} attribute is null, [=throw=] a TypeError.
+  1. If [=this's=] {% raw %}{{Foo/bar}}{% endraw %} attribute is null, [=throw=] a TypeError.
   1. Otherwise, return 4.
 </div>
 ```
