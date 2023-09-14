@@ -462,13 +462,11 @@ Link Notation|Meaning
 (mostly tactical "how to start a new spec")
 
 
-
 ## Sample Full Specifications following Best Practices
 
 * [Navigation API](https://wicg.github.io/navigation-api/) - (moving to the HTML Standard - new link forthcoming)
 * [Prioritized Task Scheduling](https://wicg.github.io/scheduling-apis/)
 * [Close Watcher API](https://wicg.github.io/close-watcher/)
-
 
 
 
@@ -481,7 +479,7 @@ Link Notation|Meaning
 
 * [Notes from a talk to WebML WG](https://github.com/garykac/procspec/issues/18) - Joshua Bell's high-level perspective on writing web specs and best practice tips for using Bikeshed.
 
-* [Bikeshed Cheat Sheet by apowers313 - Download free from Cheatography - Cheatography.com: Cheat Sheets For Every Occasion](https://cheatography.com/apowers313/cheat-sheets/bikeshed/)
+* [Bikeshed Cheat Sheet by apowers313](https://cheatography.com/apowers313/cheat-sheets/bikeshed/)
 
 * [CSS Spec Preprocessor](https://api.csswg.org/bikeshed/)
 

@@ -1,8 +1,5 @@
-# bikeshed-intro
+# An introduction to using Bikeshed, especially for new spec writers
 
-Create an introduction to using Bikeshed especially for new spec writers
+Document: [Introduction to Writing Specifications with Bikeshed](https://dlaliberte.github.io/bikeshed-intro/index.html)
 
-The current GitHub Pages version of the document is at https://dlaliberte.github.io/bikeshed-intro/index.html
-But that version does not contain the correct mermaid generated diagram, so until we fix that, just use the source page at
-https://github.com/dlaliberte/bikeshed-intro/blob/updates/index.md
-which GitHub correctly renders.
+Source: [bikeshed-intro/index.md at updates · dlaliberte/bikeshed-intro](http://go/gh/dlaliberte/bikeshed-intro/blob/updates/index.md)
