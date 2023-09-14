@@ -479,6 +479,8 @@ Link Notation|Meaning
 
 * [Writing Procedural Specs](https://garykac.github.io/procspec/) - A very helpful document, by Gary Kac, similar in purpose to this one.
 
+* [Notes from a talk to WebML WG](https://github.com/garykac/procspec/issues/18) - Joshua Bell's high-level perspective on writing web specs and best practice tips for using Bikeshed.
+
 * [Bikeshed Cheat Sheet by apowers313 - Download free from Cheatography - Cheatography.com: Cheat Sheets For Every Occasion](https://cheatography.com/apowers313/cheat-sheets/bikeshed/)
 
 * [CSS Spec Preprocessor](https://api.csswg.org/bikeshed/)
