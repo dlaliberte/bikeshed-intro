@@ -437,7 +437,7 @@ Definition Notation|Meaning
 Link Notation|Meaning
 --------|-------
 `[=foo=]` | Link to definition of `foo`
-`\\{{foo\\}}` | A reference to the IDL entry for `foo`
+`{% raw %}{{foo}}{% endraw %}` | A reference to the IDL entry for `foo`
 `[[foo]]` | A non-no­rmative reference to the SpecRef entry `foo`
 `[[!foo]]` | A normative reference to the SpecRef entry `foo`
 `[[#foo]]` | A reference to the section in the local document named `foo`
